@@ -17,6 +17,7 @@ import { ServicePacksSection } from './ServicePacksSection';
 import { ProductCard } from './ProductCard';
 import { filterProducts, getCategoryTitle, toPersianDigits } from '../utils/shopUtils';
 import { ProductCategory } from '../types';
+import { resolveAssetUrl } from '../utils/assetHelper';
 
 export const ShopHomeView: React.FC = () => {
   const {
@@ -60,63 +61,66 @@ export const ShopHomeView: React.FC = () => {
 
       {/* بنرهای میانی تبلیغاتی (۲ تایی با نسبت ۲:۱) */}
       {promoBanners.length >= 2 && (
-        <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-5">
-          {promoBanners.slice(0, 2).map((promo) => (
-            <div
-              key={promo.id}
-              className="relative overflow-hidden rounded-2xl sm:rounded-3xl shadow-sm border border-slate-200/80 aspect-[21/9] sm:aspect-[24/9] flex items-center p-6 text-white group cursor-pointer"
-              onClick={() => {
-                if (promo.linkUrl.includes('206')) {
-                  setActiveCarFilter('پژو ۲۰۶ (TU3 / TU5)');
-                } else if (promo.linkUrl.includes('pride')) {
-                  setActiveCarFilter('پراید (تمام مدل‌ها)');
-                }
-              }}
-            >
-              {promo.imageUrl ? (
-                <div className="absolute inset-0">
-                  <img
-                    src={promo.imageUrl}
-                    alt={promo.title}
-                    referrerPolicy="no-referrer"
-                    className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
-                  />
+        <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
+          {promoBanners.slice(0, 2).map((promo) => {
+            const promoImg = resolveAssetUrl(promo.imageUrl);
+            return (
+              <div
+                key={promo.id}
+                className="relative overflow-hidden rounded-2xl sm:rounded-3xl shadow-sm border border-slate-200/80 min-h-[160px] sm:min-h-[190px] flex items-center p-4 sm:p-6 text-white group cursor-pointer"
+                onClick={() => {
+                  if (promo.linkUrl.includes('206')) {
+                    setActiveCarFilter('پژو ۲۰۶ (TU3 / TU5)');
+                  } else if (promo.linkUrl.includes('pride')) {
+                    setActiveCarFilter('پراید (تمام مدل‌ها)');
+                  }
+                }}
+              >
+                {promoImg ? (
+                  <div className="absolute inset-0">
+                    <img
+                      src={promoImg}
+                      alt={promo.title}
+                      referrerPolicy="no-referrer"
+                      className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                    />
+                    <div
+                      className={`absolute inset-0 bg-gradient-to-r ${
+                        promo.id === 'banner-promo-1'
+                          ? 'from-slate-950/95 via-slate-950/85 to-blue-950/40'
+                          : 'from-slate-950/95 via-slate-950/85 to-amber-950/40'
+                      }`}
+                    />
+                  </div>
+                ) : (
                   <div
                     className={`absolute inset-0 bg-gradient-to-r ${
                       promo.id === 'banner-promo-1'
-                        ? 'from-slate-950 via-slate-950/85 to-blue-950/30'
-                        : 'from-slate-950 via-slate-950/85 to-amber-950/30'
+                        ? 'from-blue-950 via-blue-900 to-sky-800'
+                        : 'from-amber-950 via-amber-900 to-amber-700'
                     }`}
-                  />
-                </div>
-              ) : (
-                <div
-                  className={`absolute inset-0 bg-gradient-to-r ${
-                    promo.id === 'banner-promo-1'
-                      ? 'from-blue-950 via-blue-900 to-sky-800'
-                      : 'from-amber-950 via-amber-900 to-amber-700'
-                  }`}
-                >
-                  <div className="absolute inset-0 bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:16px_16px] opacity-10" />
-                  <div className="absolute -left-10 -bottom-10 w-44 h-44 rounded-full bg-white/10 blur-xl" />
-                </div>
-              )}
-
-              <div className="relative z-10 max-w-sm">
-                {promo.badgeText && (
-                  <span className="inline-block text-[10px] font-bold bg-amber-400 text-slate-950 px-2 py-0.5 rounded-md mb-2">
-                    {promo.badgeText}
-                  </span>
+                  >
+                    <div className="absolute inset-0 bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:16px_16px] opacity-10" />
+                    <div className="absolute -left-10 -bottom-10 w-44 h-44 rounded-full bg-white/10 blur-xl" />
+                  </div>
                 )}
-                <h3 className="text-base sm:text-lg font-black leading-snug mb-1">
-                  {promo.title}
-                </h3>
-                <p className="text-xs text-slate-300 line-clamp-2">
-                  {promo.subtitle}
-                </p>
+
+                <div className="relative z-10 max-w-sm">
+                  {promo.badgeText && (
+                    <span className="inline-block text-[10px] font-black bg-amber-400 text-slate-950 px-2 py-0.5 rounded-md mb-2 shadow-2xs">
+                      {promo.badgeText}
+                    </span>
+                  )}
+                  <h3 className="text-sm sm:text-lg font-black leading-snug mb-1">
+                    {promo.title}
+                  </h3>
+                  <p className="text-xs text-slate-200 line-clamp-2 leading-relaxed">
+                    {promo.subtitle}
+                  </p>
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       )}
 

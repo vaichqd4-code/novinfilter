@@ -36,6 +36,7 @@ import {
   toPersianDigits,
 } from '../utils/shopUtils';
 import { ProductImage } from './ProductImage';
+import { resolveAssetUrl } from '../utils/assetHelper';
 
 export const AdminPanel: React.FC = () => {
   const {
@@ -102,7 +103,7 @@ export const AdminPanel: React.FC = () => {
           <div className="text-center mb-6">
             <div className="w-16 h-16 mx-auto mb-3 rounded-2xl bg-gradient-to-tr from-blue-700 to-amber-500 p-0.5 shadow-lg flex items-center justify-center">
               <img
-                src="/assets/aistudio/1000030421_ab989be0.png"
+                src={resolveAssetUrl('assets/aistudio/1000030421_ab989be0.png')}
                 alt="نوین فیلتر"
                 className="w-full h-full object-cover rounded-[14px]"
               />
@@ -245,7 +246,7 @@ export const AdminPanel: React.FC = () => {
           <div className="flex items-center gap-3">
             <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-blue-700 to-amber-400 p-0.5 shadow-md flex-shrink-0">
               <img
-                src="/assets/aistudio/1000030421_ab989be0.png"
+                src={resolveAssetUrl('assets/aistudio/1000030421_ab989be0.png')}
                 alt="نوین فیلتر"
                 className="w-full h-full object-cover rounded-[14px]"
               />

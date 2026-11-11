@@ -13,6 +13,7 @@ import {
 import { useShop } from '../context/ShopContext';
 import { toPersianDigits } from '../utils/shopUtils';
 import { ProductCategory } from '../types';
+import { resolveAssetUrl } from '../utils/assetHelper';
 
 export const Header: React.FC = () => {
   const {
@@ -109,24 +110,25 @@ export const Header: React.FC = () => {
                 setActiveView('shop');
                 setSelectedCategory('all');
               }}
-              className="flex items-center gap-2.5 group text-right focus:outline-none"
+              className="flex items-center gap-2 sm:gap-2.5 group text-right focus:outline-none min-w-0"
             >
-              <div className="relative w-11 h-11 rounded-xl p-0.5 bg-gradient-to-tr from-blue-600 to-amber-400 shadow-md group-hover:scale-105 transition-transform duration-200 overflow-hidden flex-shrink-0">
+              <div className="relative w-10 h-10 sm:w-11 sm:h-11 rounded-xl p-0.5 bg-gradient-to-tr from-blue-600 via-sky-500 to-amber-400 shadow-sm group-hover:scale-105 transition-transform duration-200 overflow-hidden flex-shrink-0">
                 <img
-                  src="/assets/aistudio/1000030421_ab989be0.png"
+                  src={resolveAssetUrl('assets/aistudio/1000030421_ab989be0.png')}
                   alt="لوگوی نوین فیلتر"
                   className="w-full h-full object-cover rounded-[10px]"
                 />
               </div>
-              <div className="flex flex-col">
-                <div className="h-6 sm:h-7 flex items-center">
-                  <img
-                    src="/assets/aistudio/1000030476_830ce030.jpg"
-                    alt="تایپوگرافی نوین فیلتر"
-                    className="h-full object-contain filter contrast-125"
-                  />
+              <div className="flex flex-col min-w-0 text-right">
+                <div className="flex items-center gap-1.5">
+                  <span className="text-base sm:text-xl font-black text-blue-700 tracking-tight leading-tight">
+                    نوین فیلتر
+                  </span>
+                  <span className="hidden sm:inline-block text-[9px] font-black bg-amber-400 text-slate-950 px-1.5 py-0.5 rounded shadow-2xs">
+                    NOVIN
+                  </span>
                 </div>
-                <span className="text-[10px] sm:text-[11px] text-slate-500 font-medium tracking-tight">
+                <span className="text-[10px] sm:text-[11px] text-slate-500 font-medium tracking-tight truncate max-w-[160px] sm:max-w-none">
                   مرکز تخصصی روغن و فیلتر خودرو
                 </span>
               </div>
@@ -280,7 +282,7 @@ export const Header: React.FC = () => {
               <div className="p-4 bg-gradient-to-r from-blue-700 to-sky-600 text-white flex items-center justify-between">
                 <div className="flex items-center gap-2.5">
                   <img
-                    src="/assets/aistudio/1000030421_ab989be0.png"
+                    src={resolveAssetUrl('assets/aistudio/1000030421_ab989be0.png')}
                     alt="نوین فیلتر"
                     className="w-8 h-8 rounded-lg border border-white/20"
                   />

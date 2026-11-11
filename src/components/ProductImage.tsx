@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ProductCategory } from '../types';
+import { resolveAssetUrl } from '../utils/assetHelper';
 
 interface ProductImageProps {
   src?: string;
@@ -21,12 +22,13 @@ export const ProductImage: React.FC<ProductImageProps> = ({
   className = 'w-full h-full object-contain',
 }) => {
   const [hasError, setHasError] = useState(false);
+  const resolvedSrc = resolveAssetUrl(src);
 
-  // If image URL is local asset (e.g. /assets/...) or loaded successfully, try showing it
-  if (src && !hasError && !src.includes('unsplash.com')) {
+  // If image URL is local asset (e.g. assets/...) or loaded successfully, try showing it
+  if (resolvedSrc && !hasError && !resolvedSrc.includes('unsplash.com')) {
     return (
       <img
-        src={src}
+        src={resolvedSrc}
         alt={alt}
         loading="lazy"
         referrerPolicy="no-referrer"

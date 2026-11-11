@@ -42,23 +42,23 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       className="group bg-white rounded-2xl border border-slate-200/90 hover:border-blue-400 hover:shadow-xl transition-all duration-300 flex flex-col justify-between overflow-hidden cursor-pointer relative"
     >
       {/* برچسب‌های بالایی */}
-      <div className="absolute top-3 right-3 left-3 flex items-start justify-between z-10 pointer-events-none">
-        <div className="flex flex-col gap-1">
+      <div className="absolute top-2.5 right-2.5 left-2.5 flex items-start justify-between z-10 pointer-events-none">
+        <div className="flex flex-col gap-1 items-start">
           {product.discountPercent > 0 && (
-            <span className="bg-rose-500 text-white font-extrabold text-[11px] px-2 py-0.5 rounded-lg shadow-xs">
+            <span className="bg-rose-500 text-white font-black text-[10px] sm:text-[11px] px-1.5 py-0.5 rounded-md shadow-2xs">
               {toPersianDigits(product.discountPercent)}٪ تخفیف
             </span>
           )}
           {product.isServicePack && (
-            <span className="bg-amber-400 text-slate-950 font-bold text-[10px] px-2 py-0.5 rounded-lg shadow-xs flex items-center gap-1">
-              <Sparkles className="w-3 h-3 fill-slate-950" />
-              پک کامل اقتصادی
+            <span className="bg-amber-400 text-slate-950 font-black text-[9px] sm:text-[10px] px-1.5 py-0.5 rounded-md shadow-2xs flex items-center gap-1">
+              <Sparkles className="w-2.5 h-2.5 sm:w-3 sm:h-3 fill-slate-950" />
+              پک اقتصادی
             </span>
           )}
         </div>
 
         {product.tags.length > 0 && !product.isServicePack && (
-          <span className="bg-blue-600/90 backdrop-blur-xs text-white text-[10px] font-bold px-2 py-0.5 rounded-lg">
+          <span className="bg-blue-600/90 backdrop-blur-xs text-white text-[9px] sm:text-[10px] font-black px-1.5 py-0.5 rounded-md shadow-2xs">
             {product.tags[0]}
           </span>
         )}
@@ -113,7 +113,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
               </span>
             )}
             {product.compatibleCars.length > 0 && (
-              <span className="text-[10px] text-slate-500 bg-slate-100 px-2 py-0.5 rounded-md truncate max-w-[170px]">
+              <span className="text-[10px] text-slate-500 bg-slate-100 px-2 py-0.5 rounded-md truncate max-w-full">
                 {product.compatibleCars[0]}
                 {product.compatibleCars.length > 1 && ` و ${toPersianDigits(product.compatibleCars.length - 1)} خودروی دیگر`}
               </span>

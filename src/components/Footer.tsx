@@ -13,6 +13,7 @@ import {
   Lock,
 } from 'lucide-react';
 import { useShop } from '../context/ShopContext';
+import { resolveAssetUrl } from '../utils/assetHelper';
 
 export const Footer: React.FC = () => {
   const { siteSettings, setActiveView, setSelectedCategory } = useShop();
@@ -72,18 +73,17 @@ export const Footer: React.FC = () => {
             <div className="flex items-center gap-3">
               <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-blue-600 to-amber-400 p-0.5 shadow-md flex-shrink-0">
                 <img
-                  src="/assets/aistudio/1000030421_ab989be0.png"
+                  src={resolveAssetUrl('assets/aistudio/1000030421_ab989be0.png')}
                   alt="لوگوی نوین فیلتر"
                   className="w-full h-full object-cover rounded-[14px]"
                 />
               </div>
               <div>
-                <img
-                  src="/assets/aistudio/1000030476_830ce030.jpg"
-                  alt="نوین فیلتر"
-                  className="h-7 object-contain brightness-110"
-                />
-                <span className="text-[11px] text-slate-400 block mt-0.5">
+                <div className="flex items-center gap-2">
+                  <span className="text-xl font-black text-white tracking-tight">نوین فیلتر</span>
+                  <span className="text-[10px] font-black bg-amber-400 text-slate-950 px-1.5 py-0.5 rounded">NOVIN FILTER</span>
+                </div>
+                <span className="text-[11px] text-slate-400 block mt-0.5 font-medium">
                   مرکز تخصصی روغن موتور، انواع فیلتر و پک‌های دوره‌ای
                 </span>
               </div>

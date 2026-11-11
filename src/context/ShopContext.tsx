@@ -95,10 +95,10 @@ interface ShopContextType {
 const ShopContext = createContext<ShopContextType | undefined>(undefined);
 
 const STORAGE_KEYS = {
-  PRODUCTS: 'novin_filter_products_v3',
+  PRODUCTS: 'novin_filter_products_v4',
   CART: 'novin_filter_cart_v2',
   ORDERS: 'novin_filter_orders_v2',
-  BANNERS: 'novin_filter_banners_v3',
+  BANNERS: 'novin_filter_banners_v4',
   SETTINGS: 'novin_filter_settings_v2',
   USER: 'novin_filter_user_v2',
   OTP_LOGS: 'novin_filter_otp_logs_v2',

@@ -22,6 +22,7 @@ import {
   toPersianDigits,
 } from '../utils/shopUtils';
 import { UserReview } from '../types';
+import { resolveAssetUrl } from '../utils/assetHelper';
 
 export const ProductDetailView: React.FC = () => {
   const {
@@ -167,7 +168,7 @@ export const ProductDetailView: React.FC = () => {
                     currentImg === selectedProduct.image ? 'border-blue-600 shadow-xs' : 'border-slate-200 opacity-70'
                   }`}
                 >
-                  <img src={selectedProduct.image} alt="تصویر اصلی" className="w-full h-full object-contain" />
+                  <img src={resolveAssetUrl(selectedProduct.image)} alt="تصویر اصلی" className="w-full h-full object-contain" />
                 </button>
                 {selectedProduct.gallery.map((img, idx) => (
                   <button
@@ -177,7 +178,7 @@ export const ProductDetailView: React.FC = () => {
                       currentImg === img ? 'border-blue-600 shadow-xs' : 'border-slate-200 opacity-70'
                     }`}
                   >
-                    <img src={img} alt={`گالری ${idx + 1}`} className="w-full h-full object-contain" />
+                    <img src={resolveAssetUrl(img)} alt={`گالری ${idx + 1}`} className="w-full h-full object-contain" />
                   </button>
                 ))}
               </div>

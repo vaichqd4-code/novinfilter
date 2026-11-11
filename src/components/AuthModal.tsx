@@ -12,6 +12,7 @@ import {
 } from 'lucide-react';
 import { useShop } from '../context/ShopContext';
 import { toEnglishDigits, toPersianDigits, validateIranianPhone } from '../utils/shopUtils';
+import { resolveAssetUrl } from '../utils/assetHelper';
 
 export const AuthModal: React.FC = () => {
   const { isAuthModalOpen, setIsAuthModalOpen, requestOtp, verifyOtp } = useShop();
@@ -109,7 +110,7 @@ export const AuthModal: React.FC = () => {
         <div className="text-center mb-6">
           <div className="w-14 h-14 mx-auto mb-3 rounded-2xl bg-gradient-to-tr from-blue-600 to-amber-400 p-0.5 shadow-md flex items-center justify-center">
             <img
-              src="/assets/aistudio/1000030421_ab989be0.png"
+              src={resolveAssetUrl('assets/aistudio/1000030421_ab989be0.png')}
               alt="نوین فیلتر"
               className="w-full h-full object-cover rounded-[14px]"
             />
