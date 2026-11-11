@@ -29,8 +29,9 @@ export const ProductImage: React.FC<ProductImageProps> = ({
         src={src}
         alt={alt}
         loading="lazy"
+        referrerPolicy="no-referrer"
         onError={() => setHasError(true)}
-        className={className}
+        className={`${className} transition-transform duration-300 group-hover:scale-105`}
       />
     );
   }

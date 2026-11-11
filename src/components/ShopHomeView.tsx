@@ -73,16 +73,34 @@ export const ShopHomeView: React.FC = () => {
                 }
               }}
             >
-              <div
-                className={`absolute inset-0 bg-gradient-to-r ${
-                  promo.id === 'banner-promo-1'
-                    ? 'from-blue-950 via-blue-900 to-sky-800'
-                    : 'from-amber-950 via-amber-900 to-amber-700'
-                }`}
-              >
-                <div className="absolute inset-0 bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:16px_16px] opacity-10" />
-                <div className="absolute -left-10 -bottom-10 w-44 h-44 rounded-full bg-white/10 blur-xl" />
-              </div>
+              {promo.imageUrl ? (
+                <div className="absolute inset-0">
+                  <img
+                    src={promo.imageUrl}
+                    alt={promo.title}
+                    referrerPolicy="no-referrer"
+                    className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                  />
+                  <div
+                    className={`absolute inset-0 bg-gradient-to-r ${
+                      promo.id === 'banner-promo-1'
+                        ? 'from-slate-950 via-slate-950/85 to-blue-950/30'
+                        : 'from-slate-950 via-slate-950/85 to-amber-950/30'
+                    }`}
+                  />
+                </div>
+              ) : (
+                <div
+                  className={`absolute inset-0 bg-gradient-to-r ${
+                    promo.id === 'banner-promo-1'
+                      ? 'from-blue-950 via-blue-900 to-sky-800'
+                      : 'from-amber-950 via-amber-900 to-amber-700'
+                  }`}
+                >
+                  <div className="absolute inset-0 bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:16px_16px] opacity-10" />
+                  <div className="absolute -left-10 -bottom-10 w-44 h-44 rounded-full bg-white/10 blur-xl" />
+                </div>
+              )}
 
               <div className="relative z-10 max-w-sm">
                 {promo.badgeText && (
