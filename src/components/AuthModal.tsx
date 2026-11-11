@@ -175,13 +175,40 @@ export const AuthModal: React.FC = () => {
         ) : (
           <form onSubmit={handleVerifyOtp} className="space-y-4">
             {/* اعلان وضعیت ارسال پیامک */}
-            <div className="p-3 bg-blue-50 border border-blue-200 rounded-xl text-blue-900 text-xs space-y-1">
-              <div className="flex items-center gap-1.5 font-bold">
-                <CheckCircle2 className="w-4 h-4 text-blue-600" />
-                <span>پیامک کد ورود ارسال شد</span>
+            <div className="p-3 bg-gradient-to-r from-blue-50 to-sky-50 border border-blue-200 rounded-2xl text-blue-950 text-xs space-y-2">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-1.5 font-bold text-blue-800">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                  <span>پیامک کد ورود صادر شد</span>
+                </div>
+                <span className="text-[10px] bg-blue-100 text-blue-800 px-2 py-0.5 rounded font-mono font-bold">
+                  {phone}
+                </span>
               </div>
-              <p className="text-[11px] text-blue-800">
-                کد ارسالی در سرور و تب «لاگ پیامک‌ها» در پنل مدیریت نوین فیلتر ثبت شد.
+
+              {latestSentCode && (
+                <div className="flex items-center justify-between bg-white p-2.5 rounded-xl border border-blue-200 shadow-2xs">
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-[11px] text-slate-600 font-medium">کد تایید پیامکی:</span>
+                    <span className="font-mono font-black text-sm text-blue-700 tracking-wider">
+                      {latestSentCode}
+                    </span>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setOtpCode(latestSentCode);
+                      setError(null);
+                    }}
+                    className="text-[10px] font-bold bg-amber-400 hover:bg-amber-500 text-slate-950 px-2.5 py-1 rounded-lg transition shadow-2xs"
+                  >
+                    درج خودکار کد
+                  </button>
+                </div>
+              )}
+
+              <p className="text-[10px] text-slate-500 leading-relaxed">
+                این کد در سامانه پیامکی ثبت شده و در تب «لاگ پیامک‌ها» پنل مدیریت نیز موجود است.
               </p>
             </div>
 

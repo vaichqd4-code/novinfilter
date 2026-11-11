@@ -266,8 +266,8 @@ export const Footer: React.FC = () => {
               <Lock className="w-3 h-3" />
             </button>
           </div>
-          <p className="text-[11px] text-slate-600">
-            طراحی اختصاصی و بهینه‌سازی شده برای استقرار مستقیم روی Cloudflare Pages و GitHub
+          <p className="text-[11px] text-slate-400">
+            فروشگاه تخصصی نوین فیلتر | ضمانت ۱۰۰٪ اصالت فیزیکی و آزمایشگاهی کلیه کالاها
           </p>
         </div>
       </div>

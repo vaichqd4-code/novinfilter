@@ -27,6 +27,7 @@ import {
   Send,
   LogOut,
   Radio,
+  Upload,
 } from 'lucide-react';
 import { useShop } from '../context/ShopContext';
 import { Banner, Order, Product, ProductCategory } from '../types';
@@ -84,6 +85,40 @@ export const AdminPanel: React.FC = () => {
   // مودال بنر جدید/ویرایش
   const [tempBanners, setTempBanners] = useState<Banner[]>([...banners]);
   const [bannersSavedFeedback, setBannersSavedFeedback] = useState(false);
+
+  // تابع فشرده‌سازی و بارگذاری تصویر از گوشی یا سیستم ادمین
+  const handleImageFileUpload = (file: File, onDone: (dataUrl: string) => void) => {
+    if (!file.type.startsWith('image/')) return;
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const img = new window.Image();
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        const maxDim = 1000;
+        let width = img.width;
+        let height = img.height;
+        if (width > maxDim || height > maxDim) {
+          if (width > height) {
+            height = Math.round((height * maxDim) / width);
+            width = maxDim;
+          } else {
+            width = Math.round((width * maxDim) / height);
+            height = maxDim;
+          }
+        }
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        if (ctx) {
+          ctx.drawImage(img, 0, 0, width, height);
+          const compressed = canvas.toDataURL('image/jpeg', 0.85);
+          onDone(compressed);
+        }
+      };
+      img.src = e.target?.result as string;
+    };
+    reader.readAsDataURL(file);
+  };
 
   // اگر ادمین احراز هویت نشده باشد، فرم ورود رمز مدیریت نمایش داده می‌شود
   if (!isAdminAuthenticated) {
@@ -786,6 +821,94 @@ export const AdminPanel: React.FC = () => {
                       />
                     </div>
                   </div>
+
+                  {/* بخش آپلود و تنظیم عکس بنر تبلیغاتی */}
+                  <div className="bg-white p-3.5 rounded-xl border border-slate-200 space-y-2 text-xs">
+                    <label className="block font-bold text-slate-800">
+                      تصویر بنر تبلیغاتی (آپلود عکس از گوشی یا رایانه)
+                    </label>
+
+                    <div className="flex items-center gap-3">
+                      {/* پیش‌نمایش تصویر بنر */}
+                      <div className="w-28 h-16 rounded-xl bg-slate-100 border border-slate-300 overflow-hidden flex items-center justify-center flex-shrink-0 shadow-2xs">
+                        {banner.imageUrl ? (
+                          <img
+                            src={resolveAssetUrl(banner.imageUrl)}
+                            alt="پیش‌نمایش بنر"
+                            className="w-full h-full object-cover"
+                          />
+                        ) : (
+                          <span className="text-[10px] text-slate-400">بدون عکس</span>
+                        )}
+                      </div>
+
+                      <div className="flex-1 space-y-1.5">
+                        <label className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold cursor-pointer transition shadow-2xs">
+                          <Upload className="w-3.5 h-3.5" />
+                          <span>آپلود عکس بنر</span>
+                          <input
+                            type="file"
+                            accept="image/*"
+                            className="hidden"
+                            onChange={(e) => {
+                              const file = e.target.files?.[0];
+                              if (file) {
+                                handleImageFileUpload(file, (dataUrl) => {
+                                  const updated = [...tempBanners];
+                                  updated[index].imageUrl = dataUrl;
+                                  setTempBanners(updated);
+                                });
+                              }
+                            }}
+                          />
+                        </label>
+                        <input
+                          type="text"
+                          value={banner.imageUrl || ''}
+                          onChange={(e) => {
+                            const updated = [...tempBanners];
+                            updated[index].imageUrl = e.target.value;
+                            setTempBanners(updated);
+                          }}
+                          dir="ltr"
+                          placeholder="یا آدرس فایل: assets/images/... یا لینک مستقیم عکس"
+                          className="w-full px-3 py-1.5 text-xs bg-slate-50 border border-slate-300 rounded-xl font-mono text-left"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
+                      <div>
+                        <label className="block text-slate-600 font-semibold mb-0.5">متن برچسب (بج)</label>
+                        <input
+                          type="text"
+                          value={banner.badgeText || ''}
+                          onChange={(e) => {
+                            const updated = [...tempBanners];
+                            updated[index].badgeText = e.target.value;
+                            setTempBanners(updated);
+                          }}
+                          placeholder="مثلاً: پیشنهاد شگفت‌انگیز فصل"
+                          className="w-full px-2.5 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-lg"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-slate-600 font-semibold mb-0.5">لینک مقصد بنر</label>
+                        <input
+                          type="text"
+                          value={banner.linkUrl}
+                          onChange={(e) => {
+                            const updated = [...tempBanners];
+                            updated[index].linkUrl = e.target.value;
+                            setTempBanners(updated);
+                          }}
+                          dir="ltr"
+                          placeholder="#packs یا #car-peugeot-206"
+                          className="w-full px-2.5 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-lg font-mono text-left"
+                        />
+                      </div>
+                    </div>
+                  </div>
                 </div>
               ))}
             </div>
@@ -1123,18 +1246,135 @@ export const AdminPanel: React.FC = () => {
                   />
                 </div>
 
-                <div>
-                  <label className="block font-semibold text-slate-700 mb-1">
-                    آدرس تصویر یا نام فایل (اختیاری)
-                  </label>
-                  <input
-                    type="text"
-                    value={editingProduct.image}
-                    onChange={(e) => setEditingProduct({ ...editingProduct, image: e.target.value })}
-                    dir="ltr"
-                    placeholder="در صورت خالی بودن، تصویر وکتور پیش‌فرض قرار می‌گیرد"
-                    className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl font-mono text-left"
-                  />
+                <div className="sm:col-span-2 bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-3">
+                  <div className="flex items-center justify-between">
+                    <label className="block font-bold text-slate-800 text-xs">
+                      تصویر محصول (آپلود فایل، آدرس اینترنتی یا انتخاب از آرشیو)
+                    </label>
+                    {editingProduct.image && (
+                      <button
+                        type="button"
+                        onClick={() => setEditingProduct({ ...editingProduct, image: '' })}
+                        className="text-[11px] text-red-600 hover:text-red-800 font-bold"
+                      >
+                        حذف تصویر
+                      </button>
+                    )}
+                  </div>
+
+                  <div className="flex items-start gap-4">
+                    {/* پیش‌نمایش زنده عکس */}
+                    <div className="w-20 h-20 rounded-xl bg-white border border-slate-300 overflow-hidden flex items-center justify-center p-1 flex-shrink-0 shadow-2xs">
+                      {editingProduct.image ? (
+                        <img
+                          src={resolveAssetUrl(editingProduct.image)}
+                          alt="پیش‌نمایش"
+                          className="w-full h-full object-contain"
+                        />
+                      ) : (
+                        <span className="text-[10px] text-slate-400 text-center">بدون تصویر</span>
+                      )}
+                    </div>
+
+                    <div className="flex-1 space-y-2">
+                      {/* دکمه انتخاب فایل از دستگاه */}
+                      <div>
+                        <label className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold cursor-pointer transition shadow-2xs">
+                          <Upload className="w-3.5 h-3.5" />
+                          <span>انتخاب عکس از گوشی یا رایانه</span>
+                          <input
+                            type="file"
+                            accept="image/*"
+                            className="hidden"
+                            onChange={(e) => {
+                              const file = e.target.files?.[0];
+                              if (file) {
+                                handleImageFileUpload(file, (dataUrl) => {
+                                  setEditingProduct({ ...editingProduct, image: dataUrl });
+                                });
+                              }
+                            }}
+                          />
+                        </label>
+                        <span className="text-[10px] text-slate-400 mr-2">فرمت‌های JPG، PNG و WebP</span>
+                      </div>
+
+                      {/* فیلد آدرس مستقیم */}
+                      <input
+                        type="text"
+                        value={editingProduct.image}
+                        onChange={(e) => setEditingProduct({ ...editingProduct, image: e.target.value })}
+                        dir="ltr"
+                        placeholder="یا آدرس عکس را اینجا قرار دهید: https://... یا assets/images/..."
+                        className="w-full px-3 py-2 text-xs bg-white border border-slate-300 rounded-xl font-mono text-left"
+                      />
+                    </div>
+                  </div>
+
+                  {/* دکمه‌های سریع آرشیو عکس‌های استودیویی */}
+                  <div className="pt-2 border-t border-slate-200">
+                    <span className="text-[10px] text-slate-500 font-bold block mb-1.5">
+                      انتخاب سریع از آرشیو عکس‌های نوین فیلتر:
+                    </span>
+                    <div className="flex flex-wrap gap-1.5 text-[10px]">
+                      <button
+                        type="button"
+                        onClick={() => setEditingProduct({ ...editingProduct, image: 'assets/images/product_oil_canister_1794424792896.jpg' })}
+                        className="px-2 py-1 bg-white hover:bg-blue-50 border border-slate-200 rounded-lg text-slate-700"
+                      >
+                        روغن بهران (آبی)
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setEditingProduct({ ...editingProduct, image: 'assets/images/castrol_magnatec_canister_1794426629937.jpg' })}
+                        className="px-2 py-1 bg-white hover:bg-emerald-50 border border-slate-200 rounded-lg text-slate-700"
+                      >
+                        کاسترول مگناتک (سبز)
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setEditingProduct({ ...editingProduct, image: 'assets/images/platinum_oil_canister_1794425529094.jpg' })}
+                        className="px-2 py-1 bg-white hover:bg-amber-50 border border-slate-200 rounded-lg text-slate-700"
+                      >
+                        روغن سوپر رانا ۵W-30 (طلایی)
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setEditingProduct({ ...editingProduct, image: 'assets/images/mineral_oil_canister_1794425541925.jpg' })}
+                        className="px-2 py-1 bg-white hover:bg-red-50 border border-slate-200 rounded-lg text-slate-700"
+                      >
+                        روغن ۲۰W-50 پیشتاز (قرمز)
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setEditingProduct({ ...editingProduct, image: 'assets/images/product_oil_filter_1794424809429.jpg' })}
+                        className="px-2 py-1 bg-white hover:bg-slate-100 border border-slate-200 rounded-lg text-slate-700"
+                      >
+                        فیلتر روغن پیچی
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setEditingProduct({ ...editingProduct, image: 'assets/images/product_air_filter_1794424809748.jpg' })}
+                        className="px-2 py-1 bg-white hover:bg-orange-50 border border-slate-200 rounded-lg text-slate-700"
+                      >
+                        فیلتر هوا موتور
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setEditingProduct({ ...editingProduct, image: 'assets/images/cabin_filter_photo_1794425503375.jpg' })}
+                        className="px-2 py-1 bg-white hover:bg-cyan-50 border border-slate-200 rounded-lg text-slate-700"
+                      >
+                        فیلتر کابین کربن فعال
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setEditingProduct({ ...editingProduct, image: 'assets/images/gear_oil_photo_1794425515781.jpg' })}
+                        className="px-2 py-1 bg-white hover:bg-blue-50 border border-slate-200 rounded-lg text-slate-700"
+                      >
+                        روغن گیربکس (واسکازین)
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
 
