@@ -1,4 +1,4 @@
-import { Banner, Product, SiteSettings, OtpLog } from '../types';
+import { Banner, CarModel, Product, SiteSettings } from '../types';
 
 export const INITIAL_SITE_SETTINGS: SiteSettings = {
   phone: '09198878272',
@@ -28,20 +28,24 @@ export interface PopularCarOption {
   imageUrl?: string;
 }
 
+export const INITIAL_CARS: CarModel[] = [
+  { id: 'peugeot-206', name: 'پژو ۲۰۶ (TU3 / TU5)', brandGroup: 'ایران‌خودرو', imageUrl: 'assets/images/cars/peugeot-206.jpg', isActive: true },
+  { id: 'peugeot-207', name: 'پژو ۲۰۷i', brandGroup: 'ایران‌خودرو', imageUrl: 'assets/images/cars/peugeot-207.jpg', isActive: true },
+  { id: 'peugeot-pars', name: 'پژو پارس (TU5 / XU7P)', brandGroup: 'ایران‌خودرو', imageUrl: 'assets/images/cars/peugeot-pars.jpg', isActive: true },
+  { id: 'dena', name: 'دنا و دنا پلاس توربو', brandGroup: 'ایران‌خودرو', imageUrl: 'assets/images/cars/dena.jpg', isActive: true },
+  { id: 'tara', name: 'تارا (TU5P)', brandGroup: 'ایران‌خودرو', imageUrl: 'assets/images/cars/tara.jpg', isActive: true },
+  { id: 'samand', name: 'سمند و سورن EF7', brandGroup: 'ایران‌خودرو', imageUrl: 'assets/images/cars/samand.jpg', isActive: true },
+  { id: 'pride', name: 'پراید (تمام مدل‌ها)', brandGroup: 'سایپا', imageUrl: 'assets/images/cars/pride.jpg', isActive: true },
+  { id: 'tiba', name: 'تیبا، ساینا و کوییک', brandGroup: 'سایپا', imageUrl: 'assets/images/cars/tiba.jpg', isActive: true },
+  { id: 'shahin', name: 'شاهین توربو', brandGroup: 'سایپا', imageUrl: 'assets/images/cars/shahin.jpg', isActive: true },
+  { id: 'l90', name: 'تندر ۹۰ و ساندرو', brandGroup: 'رنو پارس‌خودرو', imageUrl: 'assets/images/cars/l90.jpg', isActive: true },
+  { id: 'jac-s5', name: 'جک S5 و KMC T8', brandGroup: 'کرمان موتور', imageUrl: 'assets/images/cars/jac-s5.jpg', isActive: true },
+  { id: 'mvm', name: 'ام‌وی‌ام و فونیکس (چری)', brandGroup: 'مدیران خودرو', imageUrl: 'assets/images/cars/mvm.jpg', isActive: true },
+];
+
 export const POPULAR_CARS: PopularCarOption[] = [
   { id: 'all', name: 'همه خودروها' },
-  { id: 'peugeot-206', name: 'پژو ۲۰۶ (TU3 / TU5)', imageUrl: 'assets/images/cars/peugeot-206.jpg' },
-  { id: 'peugeot-207', name: 'پژو ۲۰۷i', imageUrl: 'assets/images/cars/peugeot-207.jpg' },
-  { id: 'peugeot-pars', name: 'پژو پارس (TU5 / XU7P)', imageUrl: 'assets/images/cars/peugeot-pars.jpg' },
-  { id: 'dena', name: 'دنا و دنا پلاس توربو', imageUrl: 'assets/images/cars/dena.jpg' },
-  { id: 'tara', name: 'تارا (TU5P)', imageUrl: 'assets/images/cars/tara.jpg' },
-  { id: 'samand', name: 'سمند و سورن EF7', imageUrl: 'assets/images/cars/samand.jpg' },
-  { id: 'pride', name: 'پراید (تمام مدل‌ها)', imageUrl: 'assets/images/cars/pride.jpg' },
-  { id: 'tiba', name: 'تیبا، ساینا و کوییک', imageUrl: 'assets/images/cars/tiba.jpg' },
-  { id: 'shahin', name: 'شاهین توربو', imageUrl: 'assets/images/cars/shahin.jpg' },
-  { id: 'l90', name: 'تندر ۹۰ و ساندرو', imageUrl: 'assets/images/cars/l90.jpg' },
-  { id: 'jac-s5', name: 'جک S5 و KMC T8', imageUrl: 'assets/images/cars/jac-s5.jpg' },
-  { id: 'mvm', name: 'ام‌وی‌ام و فونیکس (چری)', imageUrl: 'assets/images/cars/mvm.jpg' },
+  ...INITIAL_CARS.map((c) => ({ id: c.id, name: c.name, imageUrl: c.imageUrl })),
 ];
 
 export const INITIAL_PRODUCTS: Product[] = [

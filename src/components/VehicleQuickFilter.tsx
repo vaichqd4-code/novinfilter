@@ -1,11 +1,16 @@
 import React from 'react';
 import { Car, Check, RotateCcw } from 'lucide-react';
 import { useShop } from '../context/ShopContext';
-import { POPULAR_CARS } from '../data/initialData';
 import { resolveAssetUrl } from '../utils/assetHelper';
 
 export const VehicleQuickFilter: React.FC = () => {
-  const { activeCarFilter, setActiveCarFilter } = useShop();
+  const { cars, activeCarFilter, setActiveCarFilter } = useShop();
+
+  const activeCars = cars.filter((c) => c.isActive);
+  const filterItems = [
+    { id: 'all', name: 'همه خودروها', imageUrl: undefined },
+    ...activeCars,
+  ];
 
   return (
     <section className="max-w-7xl mx-auto px-3 sm:px-4 pt-4 sm:pt-6">
@@ -38,7 +43,7 @@ export const VehicleQuickFilter: React.FC = () => {
 
         {/* دکمه‌های افقی انتخاب خودرو همراه با تصویر واقعی هر خودرو */}
         <div className="flex items-center gap-2.5 overflow-x-auto pb-1.5 mobile-x-scroll">
-          {POPULAR_CARS.map((car) => {
+          {filterItems.map((car) => {
             const isSelected =
               activeCarFilter === car.name || (car.id === 'all' && activeCarFilter === 'all');
             return (

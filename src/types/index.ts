@@ -1,3 +1,11 @@
+export interface CarModel {
+  id: string;
+  name: string;
+  brandGroup?: string;
+  imageUrl?: string;
+  isActive: boolean;
+}
+
 export type ProductCategory = 
   | 'engine_oil' 
   | 'oil_filter' 

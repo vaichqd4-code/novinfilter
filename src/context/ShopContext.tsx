@@ -2,6 +2,7 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 import {
   Banner,
   BuyerInfo,
+  CarModel,
   CartItem,
   Order,
   OtpLog,
@@ -11,6 +12,7 @@ import {
 } from '../types';
 import {
   INITIAL_BANNERS,
+  INITIAL_CARS,
   INITIAL_PRODUCTS,
   INITIAL_SITE_SETTINGS,
 } from '../data/initialData';
@@ -32,6 +34,7 @@ type ActiveView =
 
 interface ShopContextType {
   products: Product[];
+  cars: CarModel[];
   cart: CartItem[];
   orders: Order[];
   banners: Banner[];
@@ -86,9 +89,19 @@ interface ShopContextType {
   addProduct: (productData: Omit<Product, 'id' | 'rating' | 'reviewsCount'>) => void;
   updateProduct: (id: string, updates: Partial<Product>) => void;
   deleteProduct: (id: string) => void;
+  addCar: (carData: Omit<CarModel, 'id'> & { id?: string }) => void;
+  updateCar: (id: string, updates: Partial<CarModel>) => void;
+  deleteCar: (id: string) => void;
+  setCarsList: (newCars: CarModel[]) => void;
   updateOrderStatus: (orderId: string, status: Order['status']) => void;
   updateBanners: (newBanners: Banner[]) => void;
   updateSiteSettings: (newSettings: Partial<SiteSettings>) => void;
+  importStoreBackup: (payload: {
+    products?: Product[];
+    cars?: CarModel[];
+    banners?: Banner[];
+    siteSettings?: Partial<SiteSettings>;
+  }) => boolean;
   resetAllDataToDefaults: () => void;
 }
 
@@ -96,6 +109,7 @@ const ShopContext = createContext<ShopContextType | undefined>(undefined);
 
 const STORAGE_KEYS = {
   PRODUCTS: 'novin_filter_products_v6',
+  CARS: 'novin_filter_cars_v1',
   CART: 'novin_filter_cart_v2',
   ORDERS: 'novin_filter_orders_v2',
   BANNERS: 'novin_filter_banners_v6',
@@ -113,6 +127,16 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
       return saved ? JSON.parse(saved) : INITIAL_PRODUCTS;
     } catch {
       return INITIAL_PRODUCTS;
+    }
+  });
+
+  // 1b. Managed Cars
+  const [cars, setCars] = useState<CarModel[]>(() => {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEYS.CARS);
+      return saved ? JSON.parse(saved) : INITIAL_CARS;
+    } catch {
+      return INITIAL_CARS;
     }
   });
 
@@ -295,6 +319,10 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
   useEffect(() => {
     localStorage.setItem(STORAGE_KEYS.PRODUCTS, JSON.stringify(products));
   }, [products]);
+
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEYS.CARS, JSON.stringify(cars));
+  }, [cars]);
 
   useEffect(() => {
     localStorage.setItem(STORAGE_KEYS.CART, JSON.stringify(cart));
@@ -557,7 +585,7 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const addProduct = (productData: Omit<Product, 'id' | 'rating' | 'reviewsCount'>) => {
     const newProduct: Product = {
       ...productData,
-      id: `prod-${Date.now()}`,
+      id: productData.isServicePack ? `pack-${Date.now()}` : `prod-${Date.now()}`,
       rating: 5.0,
       reviewsCount: 1,
     };
@@ -574,6 +602,28 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setProducts((prev) => prev.filter((item) => item.id !== id));
   };
 
+  const addCar = (carData: Omit<CarModel, 'id'> & { id?: string }) => {
+    const slugBase = (carData.id || '')
+      .trim()
+      .toLowerCase()
+      .replace(/[^a-z0-9-]+/g, '-')
+      .replace(/^-|-$/g, '');
+    const id = slugBase || `car-${Date.now()}`;
+    setCars((prev) => [...prev, { ...carData, id }]);
+  };
+
+  const updateCar = (id: string, updates: Partial<CarModel>) => {
+    setCars((prev) => prev.map((c) => (c.id === id ? { ...c, ...updates } : c)));
+  };
+
+  const deleteCar = (id: string) => {
+    setCars((prev) => prev.filter((c) => c.id !== id));
+  };
+
+  const setCarsList = (newCars: CarModel[]) => {
+    setCars(newCars);
+  };
+
   const updateOrderStatus = (orderId: string, status: Order['status']) => {
     setOrders((prev) =>
       prev.map((ord) => (ord.id === orderId ? { ...ord, status } : ord))
@@ -588,12 +638,39 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setSiteSettings((prev) => ({ ...prev, ...newSettings }));
   };
 
+  const importStoreBackup = (payload: {
+    products?: Product[];
+    cars?: CarModel[];
+    banners?: Banner[];
+    siteSettings?: Partial<SiteSettings>;
+  }): boolean => {
+    try {
+      if (Array.isArray(payload.products) && payload.products.length > 0) {
+        setProducts(payload.products);
+      }
+      if (Array.isArray(payload.cars) && payload.cars.length > 0) {
+        setCars(payload.cars);
+      }
+      if (Array.isArray(payload.banners) && payload.banners.length > 0) {
+        setBanners(payload.banners);
+      }
+      if (payload.siteSettings && typeof payload.siteSettings === 'object') {
+        setSiteSettings((prev) => ({ ...prev, ...payload.siteSettings }));
+      }
+      return true;
+    } catch {
+      return false;
+    }
+  };
+
   const resetAllDataToDefaults = () => {
     setProducts(INITIAL_PRODUCTS);
+    setCars(INITIAL_CARS);
     setBanners(INITIAL_BANNERS);
     setSiteSettings(INITIAL_SITE_SETTINGS);
     setOtpLogs([]);
     localStorage.removeItem(STORAGE_KEYS.PRODUCTS);
+    localStorage.removeItem(STORAGE_KEYS.CARS);
     localStorage.removeItem(STORAGE_KEYS.BANNERS);
     localStorage.removeItem(STORAGE_KEYS.SETTINGS);
     localStorage.removeItem(STORAGE_KEYS.OTP_LOGS);
@@ -603,6 +680,7 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
     <ShopContext.Provider
       value={{
         products,
+        cars,
         cart,
         orders,
         banners,
@@ -642,9 +720,14 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
         addProduct,
         updateProduct,
         deleteProduct,
+        addCar,
+        updateCar,
+        deleteCar,
+        setCarsList,
         updateOrderStatus,
         updateBanners,
         updateSiteSettings,
+        importStoreBackup,
         resetAllDataToDefaults,
       }}
     >

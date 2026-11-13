@@ -2,10 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { ChevronRight, ChevronLeft, Sparkles, ArrowLeft, ShieldCheck } from 'lucide-react';
 import { useShop } from '../context/ShopContext';
 import { resolveAssetUrl } from '../utils/assetHelper';
-import { POPULAR_CARS } from '../data/initialData';
 
 export const HomeHeroSlider: React.FC = () => {
-  const { banners, setActiveView, setSelectedCategory, setActiveCarFilter } = useShop();
+  const { banners, cars, setActiveView, setSelectedCategory, setActiveCarFilter } = useShop();
   const sliderBanners = banners.filter((b) => b.type === 'slider' && b.isActive);
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -26,7 +25,7 @@ export const HomeHeroSlider: React.FC = () => {
       setActiveCarFilter('all');
       setSelectedCategory('service_pack');
     } else if (current.linkUrl.startsWith('#car-')) {
-      const matchedCar = POPULAR_CARS.find((c) => `#car-${c.id}` === current.linkUrl);
+      const matchedCar = cars.find((c) => `#car-${c.id}` === current.linkUrl);
       setSelectedCategory('all');
       setActiveCarFilter(matchedCar ? matchedCar.name : 'all');
     }
