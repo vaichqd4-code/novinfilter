@@ -166,9 +166,25 @@ export function filterProducts(
 
     // فیلتر خودرو
     if (carModel && carModel !== 'all') {
-      const matchCar = product.compatibleCars.some((car) =>
-        car.toLowerCase().includes(carModel.toLowerCase())
-      ) || (product.technicalSpecs.suitableCars && product.technicalSpecs.suitableCars.includes(carModel));
+      const normalizedTarget = toEnglishDigits(carModel).toLowerCase().trim();
+      const baseName = normalizedTarget.replace(/\(.*?\)/g, '').trim();
+      const tokens = baseName
+        .split(/[،,/|\s]+/)
+        .map((t) => t.trim())
+        .filter((t) => t.length >= 2 && !['پژو', 'مدل', 'خودرو', 'تمام', 'و'].includes(t));
+
+      const matchCar =
+        product.compatibleCars.some((car) => {
+          const c = toEnglishDigits(car).toLowerCase();
+          return c.includes(normalizedTarget) || (baseName && c.includes(baseName)) || tokens.some((tok) => c.includes(tok));
+        }) ||
+        Boolean(
+          product.technicalSpecs.suitableCars &&
+            (() => {
+              const s = toEnglishDigits(product.technicalSpecs.suitableCars).toLowerCase();
+              return s.includes(normalizedTarget) || (baseName && s.includes(baseName)) || tokens.some((tok) => s.includes(tok));
+            })()
+        );
       if (!matchCar) return false;
     }
 

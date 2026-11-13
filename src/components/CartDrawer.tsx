@@ -126,12 +126,14 @@ export const CartDrawer: React.FC = () => {
                     <div className="w-16 h-16 rounded-xl border border-slate-200 bg-slate-50 p-1 flex-shrink-0 flex items-center justify-center">
                       <ProductImage
                         src={item.product.image}
+                        packImages={item.product.packImages}
                         alt={item.product.title}
                         category={item.product.category}
                         title={item.product.title}
                         brand={item.product.brand}
                         viscosity={item.product.technicalSpecs?.viscosity}
                         className="w-full h-full object-contain"
+                        compact
                       />
                     </div>
 

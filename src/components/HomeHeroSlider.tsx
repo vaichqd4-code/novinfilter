@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { ChevronRight, ChevronLeft, Sparkles, ArrowLeft, ShieldCheck } from 'lucide-react';
 import { useShop } from '../context/ShopContext';
 import { resolveAssetUrl } from '../utils/assetHelper';
+import { POPULAR_CARS } from '../data/initialData';
 
 export const HomeHeroSlider: React.FC = () => {
-  const { banners, setActiveView, setSelectedCategory } = useShop();
+  const { banners, setActiveView, setSelectedCategory, setActiveCarFilter } = useShop();
   const sliderBanners = banners.filter((b) => b.type === 'slider' && b.isActive);
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -22,11 +23,17 @@ export const HomeHeroSlider: React.FC = () => {
 
   const handleBannerAction = () => {
     if (current.linkUrl === '#packs') {
+      setActiveCarFilter('all');
       setSelectedCategory('service_pack');
-      setActiveView('shop');
-    } else {
-      setActiveView('shop');
+    } else if (current.linkUrl.startsWith('#car-')) {
+      const matchedCar = POPULAR_CARS.find((c) => `#car-${c.id}` === current.linkUrl);
+      setSelectedCategory('all');
+      setActiveCarFilter(matchedCar ? matchedCar.name : 'all');
     }
+    setActiveView('shop');
+    setTimeout(() => {
+      document.getElementById('products')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 80);
   };
 
   const resolvedBannerImg = resolveAssetUrl(current.imageUrl);
@@ -66,9 +73,9 @@ export const HomeHeroSlider: React.FC = () => {
               referrerPolicy="no-referrer"
               className="w-full h-full object-cover object-center"
             />
-            {/* گرادیان سایه راست‌چین برای خوانایی عالی تایپوگرافی فارسی */}
-            <div className="absolute inset-0 bg-gradient-to-l from-slate-950/92 via-slate-950/75 to-slate-950/35 sm:bg-gradient-to-r sm:from-slate-950/95 sm:via-slate-950/80 sm:to-slate-950/30" />
-            <div className="absolute inset-0 bg-blue-950/20 mix-blend-multiply" />
+            {/* گرادیان سایه راست‌به‌چپ برای خوانایی عالی متن فارسی در سمت راست و نمایش شفاف خودرو/روغن در سمت چپ */}
+            <div className="absolute inset-0 bg-gradient-to-l from-slate-950/92 via-slate-950/65 to-slate-950/15" />
+            <div className="absolute inset-0 bg-blue-950/15 mix-blend-multiply" />
           </div>
         ) : (
           <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-blue-950 to-sky-900 overflow-hidden">
@@ -76,14 +83,15 @@ export const HomeHeroSlider: React.FC = () => {
           </div>
         )}
 
-        {/* نشان رسمی و ملایم نوین فیلتر در پس‌زمینه بنر */}
-        <div className="hidden sm:block absolute left-8 lg:left-16 top-1/2 -translate-y-1/2 w-44 h-44 lg:w-64 lg:h-64 opacity-20 pointer-events-none transform rotate-6">
-          <img
-            src={resolveAssetUrl('assets/aistudio/1000030421_ab989be0.png')}
-            alt=""
-            className="w-full h-full object-contain filter drop-shadow-[0_0_40px_rgba(245,158,11,0.5)]"
-          />
-        </div>
+        {!resolvedBannerImg && (
+          <div className="hidden sm:block absolute left-8 lg:left-16 top-1/2 -translate-y-1/2 w-44 h-44 lg:w-64 lg:h-64 opacity-20 pointer-events-none transform rotate-6">
+            <img
+              src={resolveAssetUrl('assets/aistudio/1000030421_ab989be0.png')}
+              alt=""
+              className="w-full h-full object-contain filter drop-shadow-[0_0_40px_rgba(245,158,11,0.5)]"
+            />
+          </div>
+        )}
 
         {/* محتوای متن روی بنر */}
         <div className="relative h-full z-10 flex flex-col justify-center px-5 sm:px-14 md:px-16 max-w-2xl text-white pt-5 pb-11 sm:py-6">

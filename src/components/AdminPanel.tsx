@@ -446,12 +446,14 @@ export const AdminPanel: React.FC = () => {
                         <div className="w-12 h-12 rounded-lg border border-slate-200 bg-white p-1">
                           <ProductImage
                             src={p.image}
+                            packImages={p.packImages}
                             alt=""
                             category={p.category}
                             title={p.title}
                             brand={p.brand}
                             viscosity={p.technicalSpecs?.viscosity}
                             className="w-full h-full object-contain"
+                            compact
                           />
                         </div>
                       </td>
@@ -874,6 +876,34 @@ export const AdminPanel: React.FC = () => {
                           placeholder="یا آدرس فایل: assets/images/... یا لینک مستقیم عکس"
                           className="w-full px-3 py-1.5 text-xs bg-slate-50 border border-slate-300 rounded-xl font-mono text-left"
                         />
+                      </div>
+                    </div>
+
+                    <div className="pt-2 border-t border-slate-100">
+                      <span className="text-[10px] text-slate-500 font-bold block mb-1.5">
+                        انتخاب سریع از بنرهای آماده نوین فیلتر (با خودروهای ایرانی):
+                      </span>
+                      <div className="flex flex-wrap gap-1.5 text-[10px]">
+                        {[
+                          { label: 'بنر اصلی پک‌ها (دنا و ۲۰۶)', path: 'assets/images/banners/hero-packs-showcase.jpg' },
+                          { label: 'تعمیرگاه ایران‌خودرو', path: 'assets/images/banners/hero-ikco-workshop.jpg' },
+                          { label: 'سرویس سایپا (پراید و شاهین)', path: 'assets/images/banners/hero-saipa-fleet.jpg' },
+                          { label: 'کارت تبلیغاتی پژو و TU5', path: 'assets/images/banners/promo-ikco-tu5.jpg' },
+                          { label: 'کارت تبلیغاتی اقتصادی سایپا', path: 'assets/images/banners/promo-saipa-eco.jpg' },
+                        ].map((preset) => (
+                          <button
+                            key={preset.path}
+                            type="button"
+                            onClick={() => {
+                              const updated = [...tempBanners];
+                              updated[index].imageUrl = preset.path;
+                              setTempBanners(updated);
+                            }}
+                            className="px-2 py-1 bg-slate-50 hover:bg-blue-50 border border-slate-200 rounded-lg text-slate-700"
+                          >
+                            {preset.label}
+                          </button>
+                        ))}
                       </div>
                     </div>
 
@@ -1314,64 +1344,85 @@ export const AdminPanel: React.FC = () => {
                   {/* دکمه‌های سریع آرشیو عکس‌های استودیویی */}
                   <div className="pt-2 border-t border-slate-200">
                     <span className="text-[10px] text-slate-500 font-bold block mb-1.5">
-                      انتخاب سریع از آرشیو عکس‌های نوین فیلتر:
+                      انتخاب سریع از آرشیو عکس‌های واقعی نوین فیلتر:
                     </span>
                     <div className="flex flex-wrap gap-1.5 text-[10px]">
                       <button
                         type="button"
-                        onClick={() => setEditingProduct({ ...editingProduct, image: 'assets/images/product_oil_canister_1794424792896.jpg' })}
+                        onClick={() => setEditingProduct({ ...editingProduct, image: 'assets/images/products/oil-behran-rana-10w40.jpg' })}
                         className="px-2 py-1 bg-white hover:bg-blue-50 border border-slate-200 rounded-lg text-slate-700"
                       >
-                        روغن بهران (آبی)
+                        بهران رانا ۱۰W-40
                       </button>
                       <button
                         type="button"
-                        onClick={() => setEditingProduct({ ...editingProduct, image: 'assets/images/castrol_magnatec_canister_1794426629937.jpg' })}
-                        className="px-2 py-1 bg-white hover:bg-emerald-50 border border-slate-200 rounded-lg text-slate-700"
-                      >
-                        کاسترول مگناتک (سبز)
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => setEditingProduct({ ...editingProduct, image: 'assets/images/platinum_oil_canister_1794425529094.jpg' })}
+                        onClick={() => setEditingProduct({ ...editingProduct, image: 'assets/images/products/oil-behran-super-rana-5w30.jpg' })}
                         className="px-2 py-1 bg-white hover:bg-amber-50 border border-slate-200 rounded-lg text-slate-700"
                       >
-                        روغن سوپر رانا ۵W-30 (طلایی)
+                        بهران سوپر رانا ۵W-30
                       </button>
                       <button
                         type="button"
-                        onClick={() => setEditingProduct({ ...editingProduct, image: 'assets/images/mineral_oil_canister_1794425541925.jpg' })}
+                        onClick={() => setEditingProduct({ ...editingProduct, image: 'assets/images/products/oil-castrol-magnatec-10w40.jpg' })}
+                        className="px-2 py-1 bg-white hover:bg-emerald-50 border border-slate-200 rounded-lg text-slate-700"
+                      >
+                        کاسترول مگناتک ۱۰W-40
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setEditingProduct({ ...editingProduct, image: 'assets/images/products/oil-behran-pishtaz-20w50.jpg' })}
                         className="px-2 py-1 bg-white hover:bg-red-50 border border-slate-200 rounded-lg text-slate-700"
                       >
-                        روغن ۲۰W-50 پیشتاز (قرمز)
+                        بهران پیشتاز ۲۰W-50
                       </button>
                       <button
                         type="button"
-                        onClick={() => setEditingProduct({ ...editingProduct, image: 'assets/images/product_oil_filter_1794424809429.jpg' })}
+                        onClick={() => setEditingProduct({ ...editingProduct, image: 'assets/images/products/filter-oil-serkan-sf7241-tu5.jpg' })}
                         className="px-2 py-1 bg-white hover:bg-slate-100 border border-slate-200 rounded-lg text-slate-700"
                       >
-                        فیلتر روغن پیچی
+                        فیلتر روغن TU5 سرکان (SF-7241)
                       </button>
                       <button
                         type="button"
-                        onClick={() => setEditingProduct({ ...editingProduct, image: 'assets/images/product_air_filter_1794424809748.jpg' })}
+                        onClick={() => setEditingProduct({ ...editingProduct, image: 'assets/images/products/filter-oil-serkan-sf7735-pride.jpg' })}
+                        className="px-2 py-1 bg-white hover:bg-rose-50 border border-slate-200 rounded-lg text-slate-700"
+                      >
+                        فیلتر روغن پراید/تیبا (SF-7735)
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setEditingProduct({ ...editingProduct, image: 'assets/images/products/filter-oil-serkan-sf7110-ef7.jpg' })}
+                        className="px-2 py-1 bg-white hover:bg-slate-100 border border-slate-200 rounded-lg text-slate-700"
+                      >
+                        فیلتر روغن EF7 سرکان (SF-7110)
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setEditingProduct({ ...editingProduct, image: 'assets/images/products/filter-air-ef7-dena.jpg' })}
                         className="px-2 py-1 bg-white hover:bg-orange-50 border border-slate-200 rounded-lg text-slate-700"
                       >
-                        فیلتر هوا موتور
+                        فیلتر هوا دنا و EF7
                       </button>
                       <button
                         type="button"
-                        onClick={() => setEditingProduct({ ...editingProduct, image: 'assets/images/cabin_filter_photo_1794425503375.jpg' })}
+                        onClick={() => setEditingProduct({ ...editingProduct, image: 'assets/images/products/filter-air-serkan-206-tu5.jpg' })}
+                        className="px-2 py-1 bg-white hover:bg-orange-50 border border-slate-200 rounded-lg text-slate-700"
+                      >
+                        فیلتر هوا ۲۰۶ TU5
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setEditingProduct({ ...editingProduct, image: 'assets/images/products/filter-cabin-carbon-206.jpg' })}
                         className="px-2 py-1 bg-white hover:bg-cyan-50 border border-slate-200 rounded-lg text-slate-700"
                       >
                         فیلتر کابین کربن فعال
                       </button>
                       <button
                         type="button"
-                        onClick={() => setEditingProduct({ ...editingProduct, image: 'assets/images/gear_oil_photo_1794425515781.jpg' })}
+                        onClick={() => setEditingProduct({ ...editingProduct, image: 'assets/images/products/oil-gear-behran-samand-75w80.jpg' })}
                         className="px-2 py-1 bg-white hover:bg-blue-50 border border-slate-200 rounded-lg text-slate-700"
                       >
-                        روغن گیربکس (واسکازین)
+                        واسکازین بهران سمند ۷۵W-80
                       </button>
                     </div>
                   </div>

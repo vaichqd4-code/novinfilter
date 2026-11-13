@@ -68,6 +68,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       <div className="relative aspect-square overflow-hidden bg-slate-50 p-2.5 sm:p-4 flex items-center justify-center">
         <ProductImage
           src={product.image}
+          packImages={product.packImages}
           alt={product.title}
           category={product.category}
           title={product.title}

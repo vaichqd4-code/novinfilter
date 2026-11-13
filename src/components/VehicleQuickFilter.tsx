@@ -2,6 +2,7 @@ import React from 'react';
 import { Car, Check, RotateCcw } from 'lucide-react';
 import { useShop } from '../context/ShopContext';
 import { POPULAR_CARS } from '../data/initialData';
+import { resolveAssetUrl } from '../utils/assetHelper';
 
 export const VehicleQuickFilter: React.FC = () => {
   const { activeCarFilter, setActiveCarFilter } = useShop();
@@ -35,22 +36,46 @@ export const VehicleQuickFilter: React.FC = () => {
           )}
         </div>
 
-        {/* دکمه‌های افقی انتخاب خودرو با اسکرول ایمن در موبایل */}
-        <div className="flex items-center gap-2 overflow-x-auto pb-1.5 mobile-x-scroll">
+        {/* دکمه‌های افقی انتخاب خودرو همراه با تصویر واقعی هر خودرو */}
+        <div className="flex items-center gap-2.5 overflow-x-auto pb-1.5 mobile-x-scroll">
           {POPULAR_CARS.map((car) => {
-            const isSelected = activeCarFilter === car.name || (car.id === 'all' && activeCarFilter === 'all');
+            const isSelected =
+              activeCarFilter === car.name || (car.id === 'all' && activeCarFilter === 'all');
             return (
               <button
                 key={car.id}
                 onClick={() => setActiveCarFilter(car.id === 'all' ? 'all' : car.name)}
-                className={`flex items-center gap-1.5 px-3 sm:px-3.5 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-colors duration-150 border flex-shrink-0 ${
+                className={`flex items-center gap-2 px-2.5 sm:px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-colors duration-150 border flex-shrink-0 ${
                   isSelected
                     ? 'bg-blue-600 text-white border-blue-600 shadow-sm'
                     : 'bg-slate-50 hover:bg-slate-100 text-slate-700 border-slate-200/80 hover:border-slate-300'
                 }`}
               >
-                {isSelected && <Check className="w-3.5 h-3.5" />}
+                {car.imageUrl ? (
+                  <div
+                    className={`w-12 h-8 sm:w-14 sm:h-9 rounded-lg overflow-hidden flex-shrink-0 border ${
+                      isSelected ? 'border-white/40 bg-white/10' : 'border-slate-200/80 bg-slate-200'
+                    }`}
+                  >
+                    <img
+                      src={resolveAssetUrl(car.imageUrl)}
+                      alt={car.name}
+                      loading="lazy"
+                      className="w-full h-full object-cover object-center"
+                    />
+                  </div>
+                ) : (
+                  <div
+                    className={`w-8 h-8 sm:w-9 sm:h-9 rounded-lg flex items-center justify-center flex-shrink-0 ${
+                      isSelected ? 'bg-white/20 text-white' : 'bg-blue-50 text-blue-700'
+                    }`}
+                  >
+                    <Car className="w-4 h-4" />
+                  </div>
+                )}
+
                 <span>{car.name}</span>
+                {isSelected && <Check className="w-3.5 h-3.5 flex-shrink-0" />}
               </button>
             );
           })}

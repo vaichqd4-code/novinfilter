@@ -74,10 +74,11 @@ export const ServicePacksSection: React.FC = () => {
                     {pack.title}
                   </h3>
 
-                  {/* تصویر پک */}
-                  <div className="w-full h-36 sm:h-40 rounded-xl overflow-hidden bg-slate-100 mb-3.5 sm:mb-4 border border-slate-200 p-2">
+                  {/* تصویر چندتایی اقلام واقعی پک */}
+                  <div className="w-full h-40 sm:h-44 rounded-xl overflow-hidden bg-slate-50 mb-3.5 sm:mb-4 border border-slate-200/80 p-2">
                     <ProductImage
                       src={pack.image}
+                      packImages={pack.packImages}
                       alt={pack.title}
                       category={pack.category}
                       title={pack.title}

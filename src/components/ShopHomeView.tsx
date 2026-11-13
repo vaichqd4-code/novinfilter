@@ -74,6 +74,7 @@ export const ShopHomeView: React.FC = () => {
                   } else if (promo.linkUrl.includes('pride')) {
                     setActiveCarFilter('پراید (تمام مدل‌ها)');
                   }
+                  document.getElementById('products')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }}
               >
                 {promoImg ? (
@@ -85,10 +86,10 @@ export const ShopHomeView: React.FC = () => {
                       className="w-full h-full object-cover object-center md:group-hover:scale-105 transition-transform duration-500"
                     />
                     <div
-                      className={`absolute inset-0 bg-gradient-to-r ${
+                      className={`absolute inset-0 bg-gradient-to-l ${
                         promo.id === 'banner-promo-1'
-                          ? 'from-slate-950/95 via-slate-950/85 to-blue-950/40'
-                          : 'from-slate-950/95 via-slate-950/85 to-amber-950/40'
+                          ? 'from-slate-950/92 via-slate-950/70 to-blue-950/20'
+                          : 'from-slate-950/92 via-slate-950/70 to-amber-950/20'
                       }`}
                     />
                   </div>

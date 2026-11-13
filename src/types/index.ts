@@ -34,6 +34,7 @@ export interface Product {
   tags: ('ویژه' | 'پرفروش' | 'اقتصادی' | 'پیشنهاد شگفت‌انگیز')[];
   isServicePack: boolean;   // آیا این آیتم پک کامل است؟
   packIncludes?: string[];  // محتویات پک (مثلاً: روغن بهران رانا ۴ لیتری + فیلتر روغن سرکان + فیلتر هوا سرکان + فیلتر اتاق)
+  packImages?: string[];    // تصاویر اقلام داخل پک برای نمایش چندتایی کنار هم
   packDiscountAdditional?: number; // تخفیف ویژه پکی
   isAvailable: boolean;
 }

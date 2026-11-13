@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   ArrowRight,
   ShieldCheck,
@@ -36,6 +36,12 @@ export const ProductDetailView: React.FC = () => {
   const [purchaseMode, setPurchaseMode] = useState<'single' | 'pack'>('single');
   const [quantity, setQuantity] = useState(1);
   const [isAddedFeedback, setIsAddedFeedback] = useState(false);
+
+  useEffect(() => {
+    setSelectedImage('');
+    setQuantity(1);
+    setPurchaseMode(selectedProduct?.isServicePack ? 'pack' : 'single');
+  }, [selectedProduct?.id, selectedProduct?.isServicePack]);
 
   // نظرات کاربران
   const [reviews, setReviews] = useState<UserReview[]>([
@@ -142,47 +148,83 @@ export const ProductDetailView: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
           {/* گالری تصاویر */}
           <div className="lg:col-span-5 flex flex-col items-center">
-            <div className="w-full aspect-square bg-slate-50 rounded-2xl p-6 flex items-center justify-center border border-slate-200 relative overflow-hidden mb-4">
-              <ProductImage
-                src={currentImg}
-                alt={selectedProduct.title}
-                category={selectedProduct.category}
-                title={selectedProduct.title}
-                viscosity={selectedProduct.technicalSpecs?.viscosity}
-                brand={selectedProduct.brand}
-                className="w-full h-full object-contain"
-              />
-              {selectedProduct.discountPercent > 0 && (
-                <span className="absolute top-4 right-4 bg-rose-500 text-white font-extrabold text-xs px-2.5 py-1 rounded-xl shadow-xs">
-                  {toPersianDigits(selectedProduct.discountPercent)}٪ تخفیف
-                </span>
-              )}
-            </div>
+            {(() => {
+              const hasPackCollage = Boolean(
+                selectedProduct.packImages && selectedProduct.packImages.length >= 2
+              );
+              const galleryThumbs = Array.from(
+                new Set(
+                  [selectedProduct.image, ...(selectedProduct.gallery || [])].filter(Boolean)
+                )
+              );
 
-            {/* بندانگشتی‌های گالری */}
-            {selectedProduct.gallery && selectedProduct.gallery.length > 0 && (
-              <div className="flex items-center gap-2 overflow-x-auto">
-                <button
-                  onClick={() => setSelectedImage(selectedProduct.image)}
-                  className={`w-16 h-16 rounded-xl border-2 overflow-hidden p-1 transition ${
-                    currentImg === selectedProduct.image ? 'border-blue-600 shadow-xs' : 'border-slate-200 opacity-70'
-                  }`}
-                >
-                  <img src={resolveAssetUrl(selectedProduct.image)} alt="تصویر اصلی" className="w-full h-full object-contain" />
-                </button>
-                {selectedProduct.gallery.map((img, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => setSelectedImage(img)}
-                    className={`w-16 h-16 rounded-xl border-2 overflow-hidden p-1 transition ${
-                      currentImg === img ? 'border-blue-600 shadow-xs' : 'border-slate-200 opacity-70'
-                    }`}
-                  >
-                    <img src={resolveAssetUrl(img)} alt={`گالری ${idx + 1}`} className="w-full h-full object-contain" />
-                  </button>
-                ))}
-              </div>
-            )}
+              return (
+                <>
+                  <div className="w-full aspect-square bg-slate-50 rounded-2xl p-4 sm:p-6 flex items-center justify-center border border-slate-200 relative overflow-hidden mb-4">
+                    <ProductImage
+                      src={currentImg}
+                      packImages={!selectedImage && hasPackCollage ? selectedProduct.packImages : undefined}
+                      alt={selectedProduct.title}
+                      category={selectedProduct.category}
+                      title={selectedProduct.title}
+                      viscosity={selectedProduct.technicalSpecs?.viscosity}
+                      brand={selectedProduct.brand}
+                      className="w-full h-full object-contain"
+                    />
+                    {selectedProduct.discountPercent > 0 && (
+                      <span className="absolute top-4 right-4 bg-rose-500 text-white font-extrabold text-xs px-2.5 py-1 rounded-xl shadow-xs z-10">
+                        {toPersianDigits(selectedProduct.discountPercent)}٪ تخفیف
+                      </span>
+                    )}
+                  </div>
+
+                  {/* بندانگشتی‌های گالری */}
+                  {(hasPackCollage || galleryThumbs.length > 1) && (
+                    <div className="flex items-center gap-2 overflow-x-auto max-w-full pb-1 mobile-x-scroll">
+                      {hasPackCollage && (
+                        <button
+                          type="button"
+                          onClick={() => setSelectedImage('')}
+                          title="نمای کلی اقلام پک"
+                          className={`w-16 h-16 rounded-xl border-2 overflow-hidden p-1 flex-shrink-0 bg-slate-50 transition ${
+                            !selectedImage
+                              ? 'border-blue-600 shadow-xs'
+                              : 'border-slate-200 opacity-75 hover:opacity-100'
+                          }`}
+                        >
+                          <ProductImage
+                            src={selectedProduct.image}
+                            packImages={selectedProduct.packImages}
+                            alt="نمای کلی پک"
+                            category={selectedProduct.category}
+                            title={selectedProduct.title}
+                            compact
+                          />
+                        </button>
+                      )}
+                      {galleryThumbs.map((img, idx) => (
+                        <button
+                          type="button"
+                          key={`${img}-${idx}`}
+                          onClick={() => setSelectedImage(img)}
+                          className={`w-16 h-16 rounded-xl border-2 overflow-hidden p-1 flex-shrink-0 bg-white transition ${
+                            selectedImage === img || (!hasPackCollage && !selectedImage && idx === 0)
+                              ? 'border-blue-600 shadow-xs'
+                              : 'border-slate-200 opacity-75 hover:opacity-100'
+                          }`}
+                        >
+                          <img
+                            src={resolveAssetUrl(img)}
+                            alt={`تصویر ${toPersianDigits(idx + 1)}`}
+                            className="w-full h-full object-contain"
+                          />
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </>
+              );
+            })()}
           </div>
 
           {/* مشخصات و سوئیچ حالت خرید */}
