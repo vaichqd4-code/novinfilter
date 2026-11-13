@@ -25,12 +25,12 @@ const MainLayout: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#F8FAFC] text-[#0F172A] font-sans selection:bg-[#0077E6] selection:text-white" dir="rtl">
+    <div className="min-h-screen w-full max-w-full overflow-x-clip flex flex-col bg-[#F8FAFC] text-[#0F172A] font-sans selection:bg-[#0077E6] selection:text-white" dir="rtl">
       {/* هدر چسبان و هوشمند */}
       <Header />
 
       {/* محتوای صفحات بر اساس وضعیت ناوبری */}
-      <main className="flex-1">
+      <main className="flex-1 w-full max-w-full">
         {activeView === 'shop' && <ShopHomeView />}
         {activeView === 'product_detail' && <ProductDetailView />}
         {activeView === 'checkout' && <CheckoutView />}

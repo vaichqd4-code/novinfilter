@@ -7,19 +7,19 @@ export const VehicleQuickFilter: React.FC = () => {
   const { activeCarFilter, setActiveCarFilter } = useShop();
 
   return (
-    <section className="max-w-7xl mx-auto px-4 pt-6">
-      <div className="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200/80 shadow-xs">
-        <div className="flex flex-wrap items-center justify-between gap-2 mb-3.5">
-          <div className="flex items-center gap-2">
-            <div className="p-2 bg-blue-50 text-blue-700 rounded-xl">
+    <section className="max-w-7xl mx-auto px-3 sm:px-4 pt-4 sm:pt-6">
+      <div className="bg-white rounded-2xl p-3.5 sm:p-5 border border-slate-200/80 shadow-xs">
+        <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
+          <div className="flex items-center gap-2 min-w-0">
+            <div className="p-2 bg-blue-50 text-blue-700 rounded-xl flex-shrink-0">
               <Car className="w-5 h-5" />
             </div>
-            <div>
+            <div className="min-w-0">
               <h3 className="text-sm sm:text-base font-bold text-slate-900">
                 انتخاب سریع بر اساس خودروی شما
               </h3>
               <p className="text-xs text-slate-500">
-                فیلترها و روغن‌های استاندارد و دقیق متناسب با پیشرانه خودروی خود را انتخاب کنید
+                فیلترها و روغن‌های استاندارد متناسب با خودروی خود را انتخاب کنید
               </p>
             </div>
           </div>
@@ -35,17 +35,17 @@ export const VehicleQuickFilter: React.FC = () => {
           )}
         </div>
 
-        {/* دکمه‌های افقی انتخاب خودرو با اسکرول نرم در موبایل */}
-        <div className="flex items-center gap-2 overflow-x-auto pb-1.5 scrollbar-thin scrollbar-thumb-slate-200">
+        {/* دکمه‌های افقی انتخاب خودرو با اسکرول ایمن در موبایل */}
+        <div className="flex items-center gap-2 overflow-x-auto pb-1.5 mobile-x-scroll">
           {POPULAR_CARS.map((car) => {
             const isSelected = activeCarFilter === car.name || (car.id === 'all' && activeCarFilter === 'all');
             return (
               <button
                 key={car.id}
                 onClick={() => setActiveCarFilter(car.id === 'all' ? 'all' : car.name)}
-                className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all duration-150 border ${
+                className={`flex items-center gap-1.5 px-3 sm:px-3.5 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-colors duration-150 border flex-shrink-0 ${
                   isSelected
-                    ? 'bg-blue-600 text-white border-blue-600 shadow-sm scale-[1.02]'
+                    ? 'bg-blue-600 text-white border-blue-600 shadow-sm'
                     : 'bg-slate-50 hover:bg-slate-100 text-slate-700 border-slate-200/80 hover:border-slate-300'
                 }`}
               >

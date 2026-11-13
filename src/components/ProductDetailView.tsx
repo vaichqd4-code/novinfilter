@@ -121,12 +121,12 @@ export const ProductDetailView: React.FC = () => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-6">
+    <div className="max-w-7xl mx-auto px-3 sm:px-4 py-4 sm:py-6">
       {/* دکمه بازگشت و مسیر راهنما (Breadcrumbs) */}
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex flex-wrap items-center justify-between gap-2 mb-4 sm:mb-6">
         <button
           onClick={() => setActiveView('shop')}
-          className="flex items-center gap-1.5 text-xs sm:text-sm font-bold text-slate-600 hover:text-blue-600 bg-white px-4 py-2 rounded-xl border border-slate-200 transition"
+          className="flex items-center gap-1.5 text-xs sm:text-sm font-bold text-slate-600 hover:text-blue-600 bg-white px-3.5 sm:px-4 py-2 rounded-xl border border-slate-200 transition"
         >
           <ArrowRight className="w-4 h-4" />
           <span>بازگشت به فهرست محصولات</span>
@@ -138,7 +138,7 @@ export const ProductDetailView: React.FC = () => {
       </div>
 
       {/* بخش اصلی محصول */}
-      <div className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-xs mb-8">
+      <div className="bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-8 border border-slate-200 shadow-xs mb-6 sm:mb-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
           {/* گالری تصاویر */}
           <div className="lg:col-span-5 flex flex-col items-center">
@@ -381,61 +381,61 @@ export const ProductDetailView: React.FC = () => {
       </div>
 
       {/* جدول مشخصات فنی دقیق */}
-      <div className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-xs mb-8">
+      <div className="bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-8 border border-slate-200 shadow-xs mb-6 sm:mb-8">
         <h3 className="text-base sm:text-lg font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100">
           جدول مشخصات فنی دقیق کالا
         </h3>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-3 text-xs sm:text-sm">
           {selectedProduct.technicalSpecs.viscosity && (
-            <div className="flex justify-between py-2 border-b border-slate-100">
+            <div className="flex justify-between gap-3 py-2 border-b border-slate-100">
               <span className="text-slate-500">گرانروی و درجه SAE:</span>
-              <span className="font-mono font-bold text-slate-900">
+              <span className="font-mono font-bold text-slate-900 text-left">
                 {selectedProduct.technicalSpecs.viscosity}
               </span>
             </div>
           )}
 
           {selectedProduct.technicalSpecs.apiStandard && (
-            <div className="flex justify-between py-2 border-b border-slate-100">
+            <div className="flex justify-between gap-3 py-2 border-b border-slate-100">
               <span className="text-slate-500">سطح کیفیت استاندارد API:</span>
-              <span className="font-mono font-bold text-slate-900">
+              <span className="font-mono font-bold text-slate-900 text-left">
                 {selectedProduct.technicalSpecs.apiStandard}
               </span>
             </div>
           )}
 
           {selectedProduct.technicalSpecs.volume && (
-            <div className="flex justify-between py-2 border-b border-slate-100">
+            <div className="flex justify-between gap-3 py-2 border-b border-slate-100">
               <span className="text-slate-500">حجم بسته‌بندی:</span>
-              <span className="font-bold text-slate-900">
+              <span className="font-bold text-slate-900 text-left">
                 {selectedProduct.technicalSpecs.volume}
               </span>
             </div>
           )}
 
           {selectedProduct.technicalSpecs.filterType && (
-            <div className="flex justify-between py-2 border-b border-slate-100">
+            <div className="flex justify-between gap-3 py-2 border-b border-slate-100">
               <span className="text-slate-500">نوع فیلتراسیون:</span>
-              <span className="font-bold text-slate-900">
+              <span className="font-bold text-slate-900 text-left">
                 {selectedProduct.technicalSpecs.filterType}
               </span>
             </div>
           )}
 
           {selectedProduct.technicalSpecs.suitableCars && (
-            <div className="flex justify-between py-2 border-b border-slate-100">
+            <div className="flex justify-between gap-3 py-2 border-b border-slate-100">
               <span className="text-slate-500">پیشرانه‌های پیشنهادی:</span>
-              <span className="font-bold text-slate-900">
+              <span className="font-bold text-slate-900 text-left">
                 {selectedProduct.technicalSpecs.suitableCars}
               </span>
             </div>
           )}
 
           {selectedProduct.technicalSpecs.warranty && (
-            <div className="flex justify-between py-2 border-b border-slate-100">
+            <div className="flex justify-between gap-3 py-2 border-b border-slate-100">
               <span className="text-slate-500">گارانتی و ضمانت:</span>
-              <span className="font-bold text-emerald-700">
+              <span className="font-bold text-emerald-700 text-left">
                 {selectedProduct.technicalSpecs.warranty}
               </span>
             </div>

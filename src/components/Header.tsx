@@ -66,12 +66,12 @@ export const Header: React.FC = () => {
     <>
       <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200/90 shadow-xs">
         {/* نوار بالایی هدر - پیام‌های اطمینان و تماس مشتری */}
-        <div className="bg-gradient-to-r from-blue-700 via-sky-600 to-blue-700 text-white text-xs py-2 px-4">
-          <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
-            <div className="flex items-center gap-4 text-xs font-medium">
-              <span className="flex items-center gap-1.5">
-                <ShieldCheck className="w-3.5 h-3.5 text-amber-300" />
-                ضمانت ۱۰۰٪ اصالت و پلمپ فیزیکی کلیه کالاها
+        <div className="bg-gradient-to-r from-blue-700 via-sky-600 to-blue-700 text-white text-[11px] sm:text-xs py-1.5 sm:py-2 px-3 sm:px-4">
+          <div className="max-w-7xl mx-auto flex items-center justify-between gap-2">
+            <div className="flex items-center gap-4 font-medium min-w-0">
+              <span className="flex items-center gap-1.5 truncate">
+                <ShieldCheck className="w-3.5 h-3.5 text-amber-300 flex-shrink-0" />
+                <span className="truncate">ضمانت ۱۰۰٪ اصالت و پلمپ کالاها</span>
               </span>
               <span className="hidden md:inline-flex items-center gap-1.5 text-blue-100">
                 <Truck className="w-3.5 h-3.5 text-amber-300" />
@@ -79,26 +79,26 @@ export const Header: React.FC = () => {
               </span>
             </div>
 
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3 flex-shrink-0">
               <a
                 href={`tel:${siteSettings.phone}`}
-                className="flex items-center gap-1.5 text-blue-50 hover:text-white transition font-mono font-bold"
+                className="flex items-center gap-1 text-blue-50 hover:text-white transition font-mono font-bold"
                 dir="ltr"
               >
                 <PhoneCall className="w-3.5 h-3.5 text-amber-300" />
-                {siteSettings.phone}
+                <span>{siteSettings.phone}</span>
               </a>
             </div>
           </div>
         </div>
 
         {/* بخش میانی هدر - منو همبرگری، لوگو، جستجو و سبد خرید */}
-        <div className="max-w-7xl mx-auto px-4 py-3 sm:py-3.5">
-          <div className="flex items-center justify-between gap-3 md:gap-6">
+        <div className="max-w-7xl mx-auto px-3 sm:px-4 py-2.5 sm:py-3.5">
+          <div className="flex items-center justify-between gap-2 sm:gap-3 md:gap-6">
             {/* دکمه منوی همبرگری موبایل */}
             <button
               onClick={() => setMobileMenuOpen(true)}
-              className="md:hidden p-2 rounded-xl text-slate-700 hover:bg-slate-100 active:bg-slate-200 transition"
+              className="md:hidden p-1.5 sm:p-2 rounded-xl text-slate-700 hover:bg-slate-100 active:bg-slate-200 transition flex-shrink-0"
               aria-label="باز کردن منوی دسته‌بندی‌ها"
             >
               <Menu className="w-6 h-6" />
@@ -110,9 +110,9 @@ export const Header: React.FC = () => {
                 setActiveView('shop');
                 setSelectedCategory('all');
               }}
-              className="flex items-center gap-2 sm:gap-2.5 group text-right focus:outline-none min-w-0"
+              className="flex items-center gap-2 sm:gap-2.5 group text-right focus:outline-none min-w-0 flex-1 md:flex-initial"
             >
-              <div className="relative w-10 h-10 sm:w-11 sm:h-11 rounded-xl p-0.5 bg-gradient-to-tr from-blue-600 via-sky-500 to-amber-400 shadow-sm group-hover:scale-105 transition-transform duration-200 overflow-hidden flex-shrink-0">
+              <div className="relative w-9 h-9 sm:w-11 sm:h-11 rounded-xl p-0.5 bg-gradient-to-tr from-blue-600 via-sky-500 to-amber-400 shadow-sm md:group-hover:scale-105 transition-transform duration-200 overflow-hidden flex-shrink-0">
                 <img
                   src={resolveAssetUrl('assets/aistudio/1000030421_ab989be0.png')}
                   alt="لوگوی نوین فیلتر"
@@ -121,15 +121,15 @@ export const Header: React.FC = () => {
               </div>
               <div className="flex flex-col min-w-0 text-right">
                 <div className="flex items-center gap-1.5">
-                  <span className="text-base sm:text-xl font-black text-blue-700 tracking-tight leading-tight">
+                  <span className="text-sm sm:text-xl font-black text-blue-700 tracking-tight leading-tight truncate">
                     نوین فیلتر
                   </span>
                   <span className="hidden sm:inline-block text-[9px] font-black bg-amber-400 text-slate-950 px-1.5 py-0.5 rounded shadow-2xs">
                     NOVIN
                   </span>
                 </div>
-                <span className="text-[10px] sm:text-[11px] text-slate-500 font-medium tracking-tight truncate max-w-[160px] sm:max-w-none">
-                  مرکز تخصصی روغن و فیلتر خودرو
+                <span className="text-[10px] sm:text-[11px] text-slate-500 font-medium tracking-tight truncate">
+                  مرکز تخصصی روغن و فیلتر
                 </span>
               </div>
             </button>
@@ -160,7 +160,7 @@ export const Header: React.FC = () => {
             </div>
 
             {/* دکمه‌های ورود و سبد خرید */}
-            <div className="flex items-center gap-2 sm:gap-3">
+            <div className="flex items-center gap-1.5 sm:gap-3 flex-shrink-0">
               {currentUser ? (
                 <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 bg-blue-50 border border-blue-200 rounded-xl text-blue-800 text-xs font-semibold">
                   <User className="w-4 h-4 text-blue-600" />
@@ -169,7 +169,7 @@ export const Header: React.FC = () => {
               ) : (
                 <button
                   onClick={() => setIsAuthModalOpen(true)}
-                  className="flex items-center gap-1.5 px-3 py-2 text-xs sm:text-sm font-bold text-slate-700 hover:text-blue-700 bg-slate-100/90 hover:bg-blue-50 border border-slate-200/90 rounded-xl transition"
+                  className="flex items-center gap-1 px-2.5 py-2 sm:px-3 text-xs sm:text-sm font-bold text-slate-700 hover:text-blue-700 bg-slate-100/90 hover:bg-blue-50 border border-slate-200/90 rounded-xl transition"
                 >
                   <User className="w-4 h-4 text-blue-600" />
                   <span className="hidden sm:inline">ورود به حساب</span>
@@ -180,7 +180,7 @@ export const Header: React.FC = () => {
               {/* سبد خرید با شمارنده زنده */}
               <button
                 onClick={() => setIsCartDrawerOpen(true)}
-                className="relative flex items-center gap-2 px-3.5 py-2 bg-gradient-to-r from-blue-600 to-sky-600 hover:from-blue-700 hover:to-sky-700 text-white rounded-xl shadow-xs hover:shadow transition font-bold text-xs sm:text-sm"
+                className="relative flex items-center gap-1.5 sm:gap-2 px-3 py-2 sm:px-3.5 bg-gradient-to-r from-blue-600 to-sky-600 hover:from-blue-700 hover:to-sky-700 text-white rounded-xl shadow-xs hover:shadow transition font-bold text-xs sm:text-sm"
                 aria-label="سبد خرید"
               >
                 <ShoppingCart className="w-4 h-4 sm:w-5 sm:h-5" />
@@ -205,7 +205,7 @@ export const Header: React.FC = () => {
                   if (activeView !== 'shop') setActiveView('shop');
                 }}
                 placeholder="جستجوی خودرو، روغن یا فیلتر..."
-                className="w-full pl-9 pr-10 py-2 text-xs bg-slate-50 border border-slate-300 rounded-xl focus:bg-white focus:outline-none focus:border-blue-600"
+                className="w-full pl-9 pr-10 py-2 text-base sm:text-xs bg-slate-50 border border-slate-300 rounded-xl focus:bg-white focus:outline-none focus:border-blue-600"
               />
               <Search className="w-4 h-4 text-slate-400 absolute right-3 top-1/2 -translate-y-1/2" />
               {searchQuery && (
@@ -276,7 +276,7 @@ export const Header: React.FC = () => {
           />
 
           {/* کشو از سمت راست به داخل باز می‌شود */}
-          <div className="fixed inset-y-0 right-0 w-[290px] max-w-[85vw] bg-white h-full shadow-2xl flex flex-col justify-between z-10 animate-in slide-in-from-right duration-250">
+          <div className="fixed inset-y-0 right-0 w-[290px] max-w-[85vw] bg-white h-full shadow-2xl flex flex-col justify-between z-10 overflow-y-auto">
             <div>
               {/* هدر منوی موبایل */}
               <div className="p-4 bg-gradient-to-r from-blue-700 to-sky-600 text-white flex items-center justify-between">

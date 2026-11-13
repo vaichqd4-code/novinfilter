@@ -33,7 +33,7 @@ export const ProductImage: React.FC<ProductImageProps> = ({
         loading="lazy"
         referrerPolicy="no-referrer"
         onError={() => setHasError(true)}
-        className={`${className} transition-transform duration-300 group-hover:scale-105`}
+        className={`${className} transition-transform duration-300 md:group-hover:scale-105`}
       />
     );
   }

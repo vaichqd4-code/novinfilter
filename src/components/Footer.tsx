@@ -94,7 +94,7 @@ export const Footer: React.FC = () => {
             </p>
 
             {/* شبکه‌های اجتماعی */}
-            <div className="pt-2 flex items-center gap-3">
+            <div className="pt-2 flex flex-wrap items-center gap-2.5 sm:gap-3">
               <a
                 href={`https://instagram.com/${siteSettings.instagramId}`}
                 target="_blank"
@@ -251,8 +251,8 @@ export const Footer: React.FC = () => {
         </div>
 
         {/* کپی‌رایت رسمی */}
-        <div className="mt-12 pt-6 border-t border-slate-800/80 text-center text-xs text-slate-500 flex flex-wrap items-center justify-between gap-4">
-          <div className="flex items-center gap-2">
+        <div className="mt-12 pt-6 border-t border-slate-800/80 text-center sm:text-right text-xs text-slate-500 flex flex-wrap items-center justify-center sm:justify-between gap-4">
+          <div className="flex items-center justify-center gap-2">
             <p>
               تمامی حقوق مادی و معنوی این وب‌سایت متعلق به برند نوین فیلتر است © ۱۴۰۵
             </p>

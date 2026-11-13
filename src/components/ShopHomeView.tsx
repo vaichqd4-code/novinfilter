@@ -61,13 +61,13 @@ export const ShopHomeView: React.FC = () => {
 
       {/* بنرهای میانی تبلیغاتی (۲ تایی با نسبت ۲:۱) */}
       {promoBanners.length >= 2 && (
-        <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
+        <div className="max-w-7xl mx-auto px-3 sm:px-4 grid grid-cols-1 md:grid-cols-2 gap-3.5 sm:gap-5">
           {promoBanners.slice(0, 2).map((promo) => {
             const promoImg = resolveAssetUrl(promo.imageUrl);
             return (
               <div
                 key={promo.id}
-                className="relative overflow-hidden rounded-2xl sm:rounded-3xl shadow-sm border border-slate-200/80 min-h-[160px] sm:min-h-[190px] flex items-center p-4 sm:p-6 text-white group cursor-pointer"
+                className="relative overflow-hidden rounded-2xl sm:rounded-3xl shadow-sm border border-slate-200/80 min-h-[150px] sm:min-h-[190px] flex items-center p-4 sm:p-6 text-white group cursor-pointer"
                 onClick={() => {
                   if (promo.linkUrl.includes('206')) {
                     setActiveCarFilter('پژو ۲۰۶ (TU3 / TU5)');
@@ -82,7 +82,7 @@ export const ShopHomeView: React.FC = () => {
                       src={promoImg}
                       alt={promo.title}
                       referrerPolicy="no-referrer"
-                      className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                      className="w-full h-full object-cover object-center md:group-hover:scale-105 transition-transform duration-500"
                     />
                     <div
                       className={`absolute inset-0 bg-gradient-to-r ${
@@ -125,10 +125,10 @@ export const ShopHomeView: React.FC = () => {
       )}
 
       {/* ۴. ویترین اصلی کاتالوگ محصولات */}
-      <section id="products" className="max-w-7xl mx-auto px-4">
+      <section id="products" className="max-w-7xl mx-auto px-3 sm:px-4">
         {/* نوار فیلتر و هدر کاتالوگ */}
-        <div className="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200 shadow-xs mb-6">
-          <div className="flex flex-wrap items-center justify-between gap-4">
+        <div className="bg-white rounded-2xl p-3.5 sm:p-5 border border-slate-200 shadow-xs mb-5 sm:mb-6">
+          <div className="flex flex-wrap items-center justify-between gap-3 sm:gap-4">
             <div>
               <div className="flex items-center gap-2">
                 <h2 className="text-base sm:text-lg font-black text-slate-900">
@@ -146,11 +146,11 @@ export const ShopHomeView: React.FC = () => {
             </div>
 
             {/* تب‌های تگ (ویژه، پرفروش، اقتصادی) و چک‌باکس فقط کالاهای موجود */}
-            <div className="flex flex-wrap items-center gap-2">
-              <div className="flex items-center bg-slate-100 p-1 rounded-xl text-xs font-semibold">
+            <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
+              <div className="flex flex-wrap items-center bg-slate-100 p-1 rounded-xl text-[11px] sm:text-xs font-semibold gap-0.5">
                 <button
                   onClick={() => setActiveTag('all')}
-                  className={`px-3 py-1.5 rounded-lg transition ${
+                  className={`px-2.5 sm:px-3 py-1.5 rounded-lg transition ${
                     activeTag === 'all' ? 'bg-white text-blue-700 shadow-xs' : 'text-slate-600'
                   }`}
                 >
@@ -237,7 +237,7 @@ export const ShopHomeView: React.FC = () => {
             </button>
           </div>
         ) : (
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-6">
             {filteredProducts.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
@@ -246,8 +246,8 @@ export const ShopHomeView: React.FC = () => {
       </section>
 
       {/* ۵. بخش مزایای نوین فیلتر و راهنمای تخصصی خرید */}
-      <section className="max-w-7xl mx-auto px-4 pb-6">
-        <div className="bg-gradient-to-tr from-blue-50 via-sky-50 to-amber-50 rounded-3xl p-6 sm:p-10 border border-blue-100 shadow-xs">
+      <section className="max-w-7xl mx-auto px-3 sm:px-4 pb-6">
+        <div className="bg-gradient-to-tr from-blue-50 via-sky-50 to-amber-50 rounded-2xl sm:rounded-3xl p-4 sm:p-10 border border-blue-100 shadow-xs">
           <div className="text-center max-w-2xl mx-auto mb-8">
             <span className="text-xs font-bold text-blue-700 bg-white px-3 py-1 rounded-full border border-blue-200 mb-2 inline-block">
               چرا خرید از نوین فیلتر؟

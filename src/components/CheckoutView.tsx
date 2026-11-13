@@ -190,20 +190,20 @@ export const CheckoutView: React.FC = () => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-8">
+    <div className="max-w-7xl mx-auto px-3 sm:px-4 py-5 sm:py-8">
       {/* دکمه بازگشت */}
       <button
         onClick={() => setActiveView('shop')}
-        className="flex items-center gap-1.5 text-xs font-bold text-slate-600 hover:text-blue-600 mb-6 bg-white px-3.5 py-2 rounded-xl border border-slate-200"
+        className="flex items-center gap-1.5 text-xs font-bold text-slate-600 hover:text-blue-600 mb-5 sm:mb-6 bg-white px-3.5 py-2 rounded-xl border border-slate-200"
       >
         <ArrowRight className="w-4 h-4" />
         <span>بازگشت و اصلاح سبد خرید</span>
       </button>
 
       {/* اطلاعیه تحویل سفارش */}
-      <div className="bg-amber-50 border-r-4 border-amber-500 p-4 rounded-xl mb-8 flex items-center justify-between flex-wrap gap-3">
+      <div className="bg-amber-50 border-r-4 border-amber-500 p-3.5 sm:p-4 rounded-xl mb-6 sm:mb-8 flex items-center justify-between flex-wrap gap-3">
         <div className="flex items-center gap-3">
-          <div className="p-2 bg-amber-400 text-slate-950 rounded-xl">
+          <div className="p-2 bg-amber-400 text-slate-950 rounded-xl flex-shrink-0">
             <Clock className="w-5 h-5" />
           </div>
           <div>
@@ -222,11 +222,11 @@ export const CheckoutView: React.FC = () => {
       </div>
 
       <form onSubmit={handleSubmit}>
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8">
           {/* فرم اطلاعات گیرنده و روش پرداخت */}
           <div className="lg:col-span-8 space-y-6">
             {/* بخش ۱: اطلاعات پستی خریدار */}
-            <div className="bg-white rounded-3xl p-6 sm:p-7 border border-slate-200 shadow-xs">
+            <div className="bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-7 border border-slate-200 shadow-xs">
               <div className="flex items-center gap-2 mb-4 pb-3 border-b border-slate-100">
                 <div className="w-7 h-7 bg-blue-600 text-white rounded-lg flex items-center justify-center font-bold text-xs">
                   ۱
@@ -385,9 +385,9 @@ export const CheckoutView: React.FC = () => {
             </div>
 
             {/* بخش ۲: پرداخت کارت به کارت */}
-            <div className="bg-white rounded-3xl p-6 sm:p-7 border border-slate-200 shadow-xs">
+            <div className="bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-7 border border-slate-200 shadow-xs">
               <div className="flex items-center gap-2 mb-4 pb-3 border-b border-slate-100">
-                <div className="w-7 h-7 bg-amber-500 text-slate-950 rounded-lg flex items-center justify-center font-bold text-xs">
+                <div className="w-7 h-7 bg-amber-500 text-slate-950 rounded-lg flex items-center justify-center font-bold text-xs flex-shrink-0">
                   ۲
                 </div>
                 <h2 className="text-sm sm:text-base font-bold text-slate-900">
@@ -396,7 +396,7 @@ export const CheckoutView: React.FC = () => {
               </div>
 
               {/* کارت بانکی شکیل */}
-              <div className="bg-gradient-to-tr from-slate-900 via-blue-950 to-blue-900 text-white rounded-2xl p-5 mb-6 shadow-md border border-blue-800/40 relative overflow-hidden">
+              <div className="bg-gradient-to-tr from-slate-900 via-blue-950 to-blue-900 text-white rounded-2xl p-4 sm:p-5 mb-6 shadow-md border border-blue-800/40 relative overflow-hidden">
                 <div className="flex justify-between items-start mb-4">
                   <div>
                     <span className="text-[11px] text-amber-300 font-semibold">
@@ -411,8 +411,8 @@ export const CheckoutView: React.FC = () => {
 
                 <div className="my-4">
                   <div className="text-[11px] text-slate-300 mb-1">شماره کارت جهت واریز:</div>
-                  <div className="flex items-center justify-between bg-black/30 p-2.5 rounded-xl border border-white/10">
-                    <span className="text-base sm:text-lg font-mono font-bold tracking-wider text-amber-300" dir="ltr">
+                  <div className="flex flex-wrap items-center justify-between gap-2 bg-black/30 p-2.5 rounded-xl border border-white/10">
+                    <span className="text-sm sm:text-lg font-mono font-bold tracking-wider text-amber-300" dir="ltr">
                       {siteSettings.bankInfo.cardNumber}
                     </span>
                     <button

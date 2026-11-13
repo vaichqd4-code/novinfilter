@@ -115,12 +115,12 @@ export const CrispSupportWidget: React.FC = () => {
   };
 
   return (
-    <div className="fixed bottom-5 right-5 z-40 print:hidden" dir="rtl">
+    <div className="fixed bottom-4 right-4 sm:bottom-5 sm:right-5 z-50 print:hidden" dir="rtl">
       {/* دکمه شناور چت */}
       {!isOpen && (
         <button
           onClick={() => setIsOpen(true)}
-          className="flex items-center gap-2.5 px-4 py-3 bg-gradient-to-r from-blue-600 to-sky-600 hover:from-blue-700 hover:to-sky-700 text-white rounded-full shadow-xl hover:shadow-2xl transition transform hover:scale-105 active:scale-95 group"
+          className="flex items-center gap-2.5 p-3.5 sm:px-4 sm:py-3 bg-gradient-to-r from-blue-600 to-sky-600 hover:from-blue-700 hover:to-sky-700 text-white rounded-full shadow-xl hover:shadow-2xl transition md:hover:scale-105 group"
           aria-label="پشتیبانی آنلاین"
         >
           <div className="relative">
@@ -136,7 +136,7 @@ export const CrispSupportWidget: React.FC = () => {
 
       {/* پنجره چت و پیش‌پشتیبانی کریسپ */}
       {isOpen && (
-        <div className="w-[340px] sm:w-[380px] bg-white rounded-3xl shadow-2xl border border-slate-200 overflow-hidden flex flex-col h-[500px] animate-in fade-in slide-in-from-bottom-6 duration-200">
+        <div className="w-[calc(100vw-2rem)] sm:w-[380px] bg-white rounded-2xl sm:rounded-3xl shadow-2xl border border-slate-200 overflow-hidden flex flex-col h-[min(500px,78dvh)]">
           {/* هدر پنجره */}
           <div className="p-4 bg-gradient-to-r from-blue-700 via-sky-600 to-blue-700 text-white flex items-center justify-between">
             <div className="flex items-center gap-2.5">
